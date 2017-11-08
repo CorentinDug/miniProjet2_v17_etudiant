@@ -36,7 +36,7 @@ class UserController implements ControllerProviderInterface {
 			$app['session']->set('roles', $data['roles']);  //dans twig {{ app.session.get('roles') }}
 			$app['session']->set('username', $data['username']);
 			$app['session']->set('logged', 1);
-			$app['session']->set('user_id', $data['id']);
+			$app['session']->set('user_id', $data['id']);//a recuperer pour le panier
 			return $app->redirect($app["url_generator"]->generate("accueil"));
 		}
 		else
