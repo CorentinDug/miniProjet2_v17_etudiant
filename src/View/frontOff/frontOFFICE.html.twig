@@ -4,16 +4,51 @@
 
 {% block contenu %}
 
-	<h1> Projet 2 web : site de vente Espace client </h1>
+	<h1 align="center" style="color: red"> Projet 2 web : site de vente Espace client </h1>
 
 	<div class="row">
 		<div class="small-7 large-7 columns">
 			<table>
-
+				<caption>Produits disponibles</caption>
+				<thead>
+				<tr>
+					<th>id</th><th>libelle</th><th>nom</th><th>prix</th>
+				</tr>
+				</thead>
+				<tbody>
+                {% for produit in produits if produits is not empty %}
+					<tr>
+						<td>{{produit.id}}</td><td>{{produit.libelle}}</td><td>{{produit.nom}}</td><td>{{produit.prix}}</td>		</td>
+						<td>
+							<a href="{{ path('Panier.add', {id: produit.id}) }}">Ajouter au panier</a>
+						</td>
+						<td>
+							<a href="{{ path('Panier.details', {id: produit.id}) }}">Details </a>
+						</td>
+					</tr>
+                {% endfor %}
+				<tbody>
 			</table>
 		</div>
 		<div class="small-5 large-5 columns">
-			le panier +liens
+			<table>
+				<caption>Panier</caption>
+				<thead>
+				<tr>
+					<th>id</th><th>quantite</th><th>prix</th><th>date d'ajout au panier</th>
+				</tr>
+				</thead>
+				<tbody>
+                {% for produit in panier if panier is not empty %}
+					<tr>
+						<td>{{produit.id}}</td><td>{{produit.quantite}}</td><td>{{produit.prix}}</td><td>{{produit.dateAjoutPanier}}</td>		</td>
+						<td>
+                            <a href="{{ path('Panier.delete', {id: produit.id}) }}">Supprimer du panier</a>
+						</td>
+					</tr>
+                {% endfor %}
+				<tbody>
+			</table>
 		</div>
 
 	</div>
