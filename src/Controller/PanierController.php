@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Model\CommandesModel;
 use App\Model\PanierModel;
 use App\Model\ProduitModel;
 use App\Model\TypeProduitModel;
@@ -13,6 +14,8 @@ class PanierController implements ControllerProviderInterface{
     private $produitModel;
     private $typeProduitModel;
     private $panierModel;
+    private $commandesModel;
+    private $panierQuantite;
 
     public function index(Application $app){
         return $this->showPagePanierProduits($app);
@@ -31,11 +34,28 @@ class PanierController implements ControllerProviderInterface{
 
     public function addPanier(Application $app,$id){
         $user = $app['session']->get('user_id');
+
         $this->produitModel = new ProduitModel($app);
         $produitModel = $this->produitModel->getProduit($id);
-        var_dump($produitModel);
 
-        return "bonjour";
+        $this->commandesModel = new CommandesModel($app);
+        $commandesModel = $this->commandesModel->getNombreCommandes();
+
+        $this->panierQuantite = new PanierModel($app);
+        $panierQuantite = $this->panierQuantite->getQuantiteById($id);
+        var_dump($panierQuantite['quantite']);
+
+        $this->panierModel = new PanierModel($app);
+
+        if ($panierQuantite['quantite'] == null){
+            $panierQuantite['quantite'] = 1;
+            $panierModel = $this->panierModel->ajouterAuPanier($user,$produitModel,$commandesModel,$panierQuantite);
+        }else{
+            $panierQuantite['quantite'] += 1;
+            $panierModel = $this->panierModel->modifierQuantitePanier($id,$panierQuantite);
+        }
+
+        return $app->redirect($app["url_generator"]->generate("Panier.index"));
     }
 
     public function deletePanier(Application $app){

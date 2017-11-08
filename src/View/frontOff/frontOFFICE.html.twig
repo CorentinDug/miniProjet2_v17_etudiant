@@ -35,13 +35,13 @@
 				<caption>Panier</caption>
 				<thead>
 				<tr>
-					<th>id</th><th>quantite</th><th>prix</th><th>date d'ajout au panier</th>
+					<th>id</th><th>quantite</th><th>prix</th><th>date d'ajout au panier</th><th>Id produit</th>
 				</tr>
 				</thead>
 				<tbody>
                 {% for produit in panier if panier is not empty %}
 					<tr>
-						<td>{{produit.id}}</td><td>{{produit.quantite}}</td><td>{{produit.prix}}</td><td>{{produit.dateAjoutPanier}}</td>		</td>
+						<td>{{produit.id}}</td><td>{{produit.quantite}}</td><td>{{produit.prix}}</td><td>{{produit.dateAjoutPanier}}</td><td>{{ produit.produit_id }}</td>		</td>
 						<td>
                             <a href="{{ path('Panier.delete', {id: produit.id}) }}">Supprimer du panier</a>
 						</td>

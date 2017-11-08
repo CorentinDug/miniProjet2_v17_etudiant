@@ -14,14 +14,53 @@ class PanierModel{
     public function getAllPanier($user){
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder
-            ->select('panier.id','panier.quantite','panier.prix','panier.dateAjoutPanier')
+            ->select('panier.id','panier.quantite','panier.prix','panier.dateAjoutPanier','panier.produit_id')
             ->from('paniers', 'panier')
-            ->where('panier.user_id = '.$user);
+            ->where('panier.user_id = '.$user. ' and quantite != 0');
 
          return $queryBuilder->execute()->fetchAll();
     }
 
-    public function ajouterAuPanier($user){
+    public function getQuantiteById($id){
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('quantite')
+            ->from('paniers')
+            ->where('produit_id='.$id);
 
+        return $queryBuilder->execute()->fetch();
+    }
+
+    public function ajouterAuPanier($user,$produitModel,$commandeModel,$panierQuantite){
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->insert('paniers')
+            ->values([
+                    'quantite' => '?',
+                    'prix' => '?',
+                    'dateAjoutPanier' => 'CURDATE()',
+                    'user_id' => '?',
+                    'produit_id' => '?',
+                    'commande_id' => '?'
+            ])
+            ->setParameter(0,$panierQuantite['quantite'])
+            ->setParameter(1,$produitModel['prix'])
+            ->setParameter(2,$user)
+            ->setParameter(3,$produitModel['id'])
+            ->setParameter(4,$commandeModel['count(id)'])
+        ;
+        return $queryBuilder->execute();
+    }
+
+    public function modifierQuantitePanier($id,$panierQuantite)
+    {
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->update('paniers')
+            ->set('quantite','?')
+            ->where('produit_id='.$id)
+            ->setParameter(0,$panierQuantite['quantite']);
+
+        return $queryBuilder->execute();
     }
 }
