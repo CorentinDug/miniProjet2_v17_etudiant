@@ -4,10 +4,8 @@ namespace App\Controller;
 use App\Model\CommandesModel;
 use App\Model\PanierModel;
 use App\Model\ProduitModel;
-use App\Model\TypeProduitModel;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
-use Symfony\Component\HttpFoundation\Request;
 
 class PanierController implements ControllerProviderInterface{
 
@@ -42,8 +40,7 @@ class PanierController implements ControllerProviderInterface{
         $commandesModel = $this->commandesModel->getNombreCommandes();
 
         $this->panierQuantite = new PanierModel($app);
-        $panierQuantite = $this->panierQuantite->getQuantiteById($id);
-        var_dump($panierQuantite['quantite']);
+        $panierQuantite = $this->panierQuantite->getQuantiteById($id,$user);
 
         $this->panierModel = new PanierModel($app);
 
@@ -52,14 +49,34 @@ class PanierController implements ControllerProviderInterface{
             $panierModel = $this->panierModel->ajouterAuPanier($user,$produitModel,$commandesModel,$panierQuantite);
         }else{
             $panierQuantite['quantite'] += 1;
-            $panierModel = $this->panierModel->modifierQuantitePanier($id,$panierQuantite);
+            $panierModel = $this->panierModel->modifierQuantitePanier($id,$panierQuantite,$user);
         }
 
         return $app->redirect($app["url_generator"]->generate("Panier.index"));
     }
 
-    public function deletePanier(Application $app){
+    public function deletePanier(Application $app,$id){
+        $user = $app['session']->get('user_id');
 
+        $this->panierModel = new PanierModel($app);
+        $panierModel = $this->panierModel->getProduitDansPanierById($id);
+
+        if ($panierModel['quantite'] == 1){
+            var_dump($panierModel['quantite']);
+            $panierModel = $this->panierModel->supprimerProduitDuPanier($id);
+        }else{
+            $panierModel['quantite'] -= 1;
+            $panierModel = $this->panierModel->modifierQuantitePanier($panierModel['produit_id'],$panierModel,$user);
+        }
+
+        return $app->redirect($app["url_generator"]->generate("Panier.index"));
+    }
+
+    public function detailsProduit(Application $app,$id){
+        $this->produitModel = new ProduitModel($app);
+        $produitModel = $this->produitModel->getProduit($id);
+
+        return $app["twig"]->render("produit/detailsProduit.html.twig",['produits'=>$produitModel]);
     }
 
     public function connect(Application $app)
@@ -67,8 +84,8 @@ class PanierController implements ControllerProviderInterface{
         $index = $app['controllers_factory'];
         $index->match("/", 'App\Controller\PanierController::showPagePanierProduits')->bind('Panier.index');
         $index->get("/add/{id}", 'App\Controller\PanierController::addPanier')->bind('Panier.add');
-        $index->match("/delete", 'App\Controller\PanierController::deletePanier')->bind('Panier.delete');
-        $index->match("/details", 'App\Controller\PanierController::detailsProduit')->bind('Panier.details');
+        $index->match("/delete/{id}", 'App\Controller\PanierController::deletePanier')->bind('Panier.delete');
+        $index->match("/details/{id}", 'App\Controller\PanierController::detailsProduit')->bind('Panier.details');
         return $index;
     }
 }

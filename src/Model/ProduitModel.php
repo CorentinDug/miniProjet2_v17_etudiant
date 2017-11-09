@@ -51,7 +51,7 @@ class ProduitModel {
     function getProduit($id) {
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder
-            ->select('id', 'typeProduit_id', 'nom', 'prix', 'photo')
+            ->select('id', 'typeProduit_id', 'nom', 'prix', 'photo','dispo','stock')
             ->from('produits')
             ->where('id= :id')
             ->setParameter('id', $id);

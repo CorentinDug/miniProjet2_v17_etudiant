@@ -30,6 +30,13 @@ class ProduitController implements ControllerProviderInterface
         return $app["twig"]->render('backOff/Produit/showProduits.html.twig',['data'=>$produits]);
     }
 
+    public function showProduitsClient(Application $app){
+        $this->produitModel = new ProduitModel($app);
+        $produits = $this->produitModel->getAllProduits();
+
+        return $app["twig"]->render('backOff/Produit/showProduits.html.twig',['data'=>$produits]);
+    }
+
     public function addProduit(Application $app) {
         $this->typeProduitModel = new TypeProduitModel($app);
         $typeProduits = $this->typeProduitModel->getAllTypeProduits();
@@ -155,6 +162,7 @@ class ProduitController implements ControllerProviderInterface
 
         $controllers->get('/', 'App\Controller\produitController::index')->bind('produit.index');
         $controllers->get('/show', 'App\Controller\produitController::showProduits')->bind('produit.showProduits');
+        $controllers->get('/showClient', 'App\Controller\produitController::showProduitsClient')->bind('produitClient.show');
 
         $controllers->get('/add', 'App\Controller\produitController::addProduit')->bind('produit.addProduit');
         $controllers->post('/add', 'App\Controller\produitController::validFormAddProduit')->bind('produit.validFormAddProduit');

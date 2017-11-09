@@ -12,17 +12,17 @@
         <li class="divider"></li>
         <li class="has-dropdown"><a href="#">produits</a>
           <ul class="dropdown">
-            <li><a href="{#{ path('produitClient.show') }#}">afficher les produits (pour le client)</a></li>
+            <li><a href="{{ path('produitClient.show') }}">afficher les produits (pour le client)</a></li>
             <li><a href="{#{ path('produitClient.find') }#}">rechercher un produit </a></li>
           </ul>
         </li>
-        <li><a href="">panier</a>
+        <li><a href="{{ path('Panier.index') }}">panier</a>
 
         </li>
         <li class="has-dropdown"><a href="#">mon compte</a>
           <ul class="dropdown">
             <li><a href="#">mes commandes</a></li>
-            <li><a href="#">mes coordonnées</a></li>
+            <li><a href="{{ path('client.index') }}">mes coordonnées</a></li>
           </ul>
         </li>
       </ul>
