@@ -46,10 +46,10 @@ class PanierController implements ControllerProviderInterface{
 
         if ($panierQuantite['quantite'] == null){
             $panierQuantite['quantite'] = 1;
-            $panierModel = $this->panierModel->ajouterAuPanier($user,$produitModel,$commandesModel,$panierQuantite);
+            $this->panierModel->ajouterAuPanier($user,$produitModel,$commandesModel,$panierQuantite);
         }else{
             $panierQuantite['quantite'] += 1;
-            $panierModel = $this->panierModel->modifierQuantitePanier($id,$panierQuantite,$user);
+            $this->panierModel->modifierQuantitePanier($id,$panierQuantite,$user);
         }
 
         return $app->redirect($app["url_generator"]->generate("Panier.index"));
@@ -63,10 +63,10 @@ class PanierController implements ControllerProviderInterface{
 
         if ($panierModel['quantite'] == 1){
             var_dump($panierModel['quantite']);
-            $panierModel = $this->panierModel->supprimerProduitDuPanier($id);
+            $this->panierModel->supprimerProduitDuPanier($id);
         }else{
             $panierModel['quantite'] -= 1;
-            $panierModel = $this->panierModel->modifierQuantitePanier($panierModel['produit_id'],$panierModel,$user);
+            $this->panierModel->modifierQuantitePanier($panierModel['produit_id'],$panierModel,$user);
         }
 
         return $app->redirect($app["url_generator"]->generate("Panier.index"));
