@@ -28,7 +28,7 @@ class clientController implements ControllerProviderInterface
     public function connect(Application $app)
     {
         $index = $app['controllers_factory'];
-        $index->match("/", 'App\Controller\clientController::showCoordonneesClient')->bind('client.index');
+        $index->match("/", 'App\Controller\clientController::index')->bind('client.index');
         $index->put("/update", 'App\Controller\clientController::modifierCoordonnes')->bind('client.update');
         return $index;
     }
