@@ -21,4 +21,15 @@ class CommandesModel
 
         return $queryBuilder->execute()->fetch();
     }
+
+    public function getCommandeByIDClient($user)
+    {
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('id','user_id','prix','date_achat','etat_id')
+            ->from('commandes')
+            ->where('user_id='.$user);
+
+        return $queryBuilder->execute()->fetchAll();
+    }
 }
