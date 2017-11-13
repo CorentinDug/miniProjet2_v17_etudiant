@@ -1,0 +1,22 @@
+{% extends "layout.html.twig" %}
+
+{% block contenu %}
+    <div class="row">
+        <table align="center">
+            <caption>Détails de vos cordonnées</caption>
+            <thead>
+            <tr>
+                <th>ID</th><th>Username</th><th>E-Mail</th><th>Nom</th><th>Code Postal</th><th>Ville</th><th>Adresse</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{donnees.id}}</td><td>{{donnees.username}}</td><td>{{donnees.email}}</td><td>{{donnees.nom}}</td>
+                </td><td>{{ donnees.code_postal }}</td><td>{{ donnees.ville }}</td><td>{{ donnees.adresse }}</td>
+                <td><a href="#">Modifier mes coordonnées</a></td>
+            </tr>
+            <tbody>
+        </table>
+    </div>
+
+{% endblock %}
