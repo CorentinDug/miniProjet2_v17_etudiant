@@ -21,6 +21,16 @@ class PanierModel{
          return $queryBuilder->execute()->fetchAll();
     }
 
+    public function getQuantiteEtPrix($user){
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('quantite','prix')
+            ->from('paniers')
+            ->where('user_id='.$user);
+
+        return $queryBuilder->execute()->fetchAll();
+    }
+
     public function getQuantiteById($id,$user){
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder

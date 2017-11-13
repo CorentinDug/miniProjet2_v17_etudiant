@@ -27,6 +27,8 @@ class PanierController implements ControllerProviderInterface{
         $this->panierModel = new PanierModel($app);
         $panierModel = $this->panierModel->getAllPanier($user);
 
+        $quantiteEtPrix = $this->panierModel->getQuantiteEtPrix($user);
+
         return $app["twig"]->render('frontOff/frontOFFICE.html.twig',['produits'=>$produitModel,'panier'=>$panierModel]);
     }
 
