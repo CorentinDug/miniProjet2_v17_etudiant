@@ -1,0 +1,27 @@
+{% extends "layout.html.twig" %}
+
+{% block contenu %}
+    <div class="row">
+        {% if donneesCommande is not empty %}
+            <table align="center">
+                <caption>Détails de vos commandes</caption>
+                <thead>
+                <tr>
+                    <th>ID de la commande</th><th>ID de l'utilisateur</th><th>Prix total de la commande</th><th>Date de passage de la commande</th><th>Etat de la commande</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for produit in donneesCommande %}
+                    <tr>
+                        <td>{{produit.id}}</td><td>{{produit.user_id}}</td><td>{{produit.prix}}</td>
+                        <td>{{ produit.date_achat }}</td><td>{{ produit.etat_id }}</td>
+                    </tr>
+                {% endfor %}
+                <tbody>
+            </table>
+        {% else %}
+            <h1 align="center" style="color: red">Vous n'avez passer pas de commandes en cours pour le moment</h1>
+        {% endif %}
+    </div>
+
+{% endblock %}
