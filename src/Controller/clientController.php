@@ -22,14 +22,16 @@ class clientController implements ControllerProviderInterface
     }
 
     public function modifierCoordonnees(Application $app,$id){
-
+        $this->clientModel = new ClientModel($app);
+        $donnees = $this->clientModel->getCoordonneesClientById($id);
+        return $app["twig"]->render('frontOff/client/editClientCoordonnees.html.twig',['donnees'=>$donnees]);
     }
 
     public function connect(Application $app)
     {
         $index = $app['controllers_factory'];
-        $index->match("/", 'App\Controller\clientController::index')->bind('client.index');
-        $index->put("/update", 'App\Controller\clientController::modifierCoordonnes')->bind('client.update');
+        $index->match("/", 'App\Controller\clientController::showCoordonneesClient')->bind('client.index');
+        $index->get("/update/{id}", 'App\Controller\clientController::modifierCoordonnees')->bind('client.update');
         return $index;
     }
 

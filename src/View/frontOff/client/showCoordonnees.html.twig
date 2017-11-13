@@ -13,7 +13,7 @@
             <tr>
                 <td>{{donnees.id}}</td><td>{{donnees.username}}</td><td>{{donnees.email}}</td><td>{{donnees.nom}}</td>
                 </td><td>{{ donnees.code_postal }}</td><td>{{ donnees.ville }}</td><td>{{ donnees.adresse }}</td>
-                <td><a href="#">Modifier mes coordonnées</a></td>
+                <td><a href="{{  path('client.update', {id: donnees.id}) }}">Modifier mes coordonnées</a></td>
             </tr>
             <tbody>
         </table>
