@@ -1,0 +1,26 @@
+{% extends "layout.html.twig" %}
+
+{% block contenu %}
+
+    <h1 align="center" style="color: red"> Projet 2 web : site de vente Espace client </h1>
+
+    <div class="row">
+        <table>
+            <caption>Détails du produit</caption>
+            <thead>
+            <tr>
+                <th>ID produit</th><th>Type de produit</th><th>nom</th><th>prix</th><th>Dipsonibilté</th><th>Stock</th><th>Photo</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{produits.id}}</td><td>{{produits.typeProduit_id}}</td><td>{{produits.nom}}</td><td>{{produits.prix}}</td>
+                    </td><td>{{ produits.dispo }}</td><td>{{ produits.stock }}</td><td>
+                        <img style="width:60px;height:60px" src="{{ asset("images") }}/{{produits.photo}}" alt="image de {{produits.nom}}" >
+                    </td>
+                </tr>
+            <tbody>
+        </table>
+    </div>
+
+{% endblock %}
