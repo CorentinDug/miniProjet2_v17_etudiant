@@ -32,4 +32,30 @@ class CommandesModel
 
         return $queryBuilder->execute()->fetchAll();
     }
+
+    public function addCommandesByClient($user,$prix){
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->insert('commandes')
+            ->values([
+                'user_id'=>'?',
+                'prix'=>'?',
+                'date_achat'=>'CURDATE()',
+                'etat_id'=>'1'
+            ])
+            ->setParameter(0,$user)
+            ->setParameter(1,$prix);
+
+        return $queryBuilder->execute();
+    }
+
+    public function getIDCommande($user,$prix){
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('id')
+            ->from('commandes')
+            ->where('user_id='.$user.' and prix='.$prix.' and date_achat = (select MAX(date_achat) from commandes)');
+
+        return $queryBuilder->execute()->fetch();
+    }
 }

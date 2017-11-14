@@ -31,26 +31,30 @@
 			</table>
 		</div>
 		<div class="small-5 large-5 columns">
-			<table>
-				<caption>Panier</caption>
-				<thead>
-				<tr>
-					<th>id</th><th>quantite</th><th>prix</th><th>date d'ajout au panier</th><th>Id produit</th>
-				</tr>
-				</thead>
-				<tbody>
-                {% for produit in panier if panier is not empty %}
+			{% if panier is not empty %}
+				<table>
+					<caption>Panier</caption>
+					<thead>
 					<tr>
-						<td>{{produit.id}}</td><td>{{produit.quantite}}</td><td>{{produit.prix}}</td><td>{{produit.dateAjoutPanier}}</td><td>{{ produit.produit_id }}</td>		</td>
-						<td>
-                            <a href="{{ path('Panier.delete', {id: produit.id}) }}">Supprimer du panier</a>
-						</td>
+						<th>id</th><th>quantite</th><th>prix</th><th>date d'ajout au panier</th><th>Id produit</th>
 					</tr>
-                {% endfor %}
-				<tbody>
-			</table>
-			<div>Prix total : </div><br>
-			<a href="{#{{ path('commande.valider') }}#}">Valider la commande</a>
+					</thead>
+					<tbody>
+					{% for produit in panier if panier is not empty %}
+						<tr>
+							<td>{{produit.id}}</td><td>{{produit.quantite}}</td><td>{{produit.prix}}</td><td>{{produit.dateAjoutPanier}}</td><td>{{ produit.produit_id }}</td>		</td>
+							<td>
+								<a href="{{ path('Panier.delete', {id: produit.id}) }}">Supprimer du panier</a>
+							</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+				<div>Prix total : {{ prix.prixTotal }} €</div><br>
+				<a href="{{ path('commande.valider') }}">Valider la commande</a>
+            {% else %}
+				<div>Vous n'avez pas de produit dans le panier</div>
+			{% endif %}
 		</div>
 
 	</div>
