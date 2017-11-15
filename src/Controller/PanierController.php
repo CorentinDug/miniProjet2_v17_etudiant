@@ -10,9 +10,7 @@ use Silex\Application;
 class PanierController implements ControllerProviderInterface{
 
     private $produitModel;
-    private $typeProduitModel;
     private $panierModel;
-    private $commandesModel;
     private $panierQuantite;
 
     public function index(Application $app){
@@ -42,9 +40,8 @@ class PanierController implements ControllerProviderInterface{
         $panierQuantite = $this->panierQuantite->getQuantiteById($id,$user);
 
         $this->panierModel = new PanierModel($app);
-        $panierId =$this->panierModel->getIDWhereNull($user,$id);
 
-        if ($panierQuantite['quantite'] == null || $panierId['id'] == null){
+        if ($panierQuantite['quantite'] == null){
             $panierQuantite['quantite'] = 1;
             $this->panierModel->ajouterAuPanier($user,$produitModel,$panierQuantite);
         }else{

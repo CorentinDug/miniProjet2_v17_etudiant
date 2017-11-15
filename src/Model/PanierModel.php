@@ -36,7 +36,7 @@ class PanierModel{
         $queryBuilder
             ->select('quantite')
             ->from('paniers')
-            ->where('produit_id='.$id.' and user_id='.$user);
+            ->where('produit_id='.$id.' and user_id='.$user.' and commande_id is null');
 
         return $queryBuilder->execute()->fetch();
     }
@@ -59,16 +59,6 @@ class PanierModel{
             ->setParameter(3,$produitModel['id'])
         ;
         return $queryBuilder->execute();
-    }
-
-    public function getIDWhereNull($user,$id){
-        $queryBuilder = new QueryBuilder($this->db);
-        $queryBuilder
-            ->select('id')
-            ->from('paniers')
-            ->where('user_id='.$user.' and commande_id is null and id='.$id);
-
-        return $queryBuilder->execute()->fetchAll();
     }
 
     public function modifierQuantitePanier($id,$panierQuantite,$user)
