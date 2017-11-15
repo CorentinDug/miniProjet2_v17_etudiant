@@ -1,0 +1,22 @@
+{% extends "layout.html.twig" %}
+
+{% block contenu %}
+    <div class="row">
+            <table align="center">
+                <caption>Détails de votre commande</caption>
+                <thead>
+                <tr>
+                    <th>Nom du produit</th><th>Quantité du produit</th><th>Prix du produit</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for produit in produits %}
+                    <tr>
+                        <td>{{produit.nom}}</td><td>{{produit.quantite}}</td><td>{{produit.prix}}</td>
+                    </tr>
+                {% endfor %}
+                <tbody>
+            </table>
+    </div>
+
+{% endblock %}

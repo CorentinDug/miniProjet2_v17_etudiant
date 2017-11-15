@@ -42,8 +42,9 @@ class PanierController implements ControllerProviderInterface{
         $panierQuantite = $this->panierQuantite->getQuantiteById($id,$user);
 
         $this->panierModel = new PanierModel($app);
+        $panierId =$this->panierModel->getIDWhereNull($user,$id);
 
-        if ($panierQuantite['quantite'] == null){
+        if ($panierQuantite['quantite'] == null || $panierId['id'] == null){
             $panierQuantite['quantite'] = 1;
             $panierModel = $this->panierModel->ajouterAuPanier($user,$produitModel,$panierQuantite);
         }else{
@@ -75,7 +76,15 @@ class PanierController implements ControllerProviderInterface{
         $this->produitModel = new ProduitModel($app);
         $produitModel = $this->produitModel->getProduit($id);
 
-        return $app["twig"]->render("produit/detailsProduit.html.twig",['produits'=>$produitModel]);
+        return $app["twig"]->render("frontOff/produit/detailsProduit.html.twig",['produits'=>$produitModel]);
+    }
+
+    public function showCommande(Application $app,$id){
+        $user = $app['session']->get('user_id');
+        $this->panierModel = new PanierModel($app);
+        $commandeDetails = $this->panierModel->getCommandeByID($user,$id);
+
+        return $app["twig"]->render("frontOff/commande/showDetailsCommandesByID.html.twig",['produits'=>$commandeDetails]);
     }
 
     public function connect(Application $app)
@@ -85,6 +94,7 @@ class PanierController implements ControllerProviderInterface{
         $index->get("/add/{id}", 'App\Controller\PanierController::addPanier')->bind('Panier.add');
         $index->match("/delete/{id}", 'App\Controller\PanierController::deletePanier')->bind('Panier.delete');
         $index->match("/details/{id}", 'App\Controller\PanierController::detailsProduit')->bind('Panier.details');
+        $index->match("/showCommande/{id}", 'App\Controller\PanierController::showCommande')->bind('Panier.showCommande');
         return $index;
     }
 }
