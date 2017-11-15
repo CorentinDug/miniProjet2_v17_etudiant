@@ -27,7 +27,9 @@ class PanierController implements ControllerProviderInterface{
         $this->panierModel = new PanierModel($app);
         $panierModel = $this->panierModel->getAllPanier($user);
 
-        return $app["twig"]->render('frontOff/frontOFFICE.html.twig',['produits'=>$produitModel,'panier'=>$panierModel]);
+        $prixTotal = $this->panierModel->getPrixByPanier($user);
+
+        return $app["twig"]->render('frontOff/frontOFFICE.html.twig',['produits'=>$produitModel,'panier'=>$panierModel,'prix'=>$prixTotal]);
     }
 
     public function addPanier(Application $app,$id){
@@ -36,9 +38,6 @@ class PanierController implements ControllerProviderInterface{
         $this->produitModel = new ProduitModel($app);
         $produitModel = $this->produitModel->getProduit($id);
 
-        $this->commandesModel = new CommandesModel($app);
-        $commandesModel = $this->commandesModel->getNombreCommandes();
-
         $this->panierQuantite = new PanierModel($app);
         $panierQuantite = $this->panierQuantite->getQuantiteById($id,$user);
 
@@ -46,10 +45,10 @@ class PanierController implements ControllerProviderInterface{
 
         if ($panierQuantite['quantite'] == null){
             $panierQuantite['quantite'] = 1;
-            $this->panierModel->ajouterAuPanier($user,$produitModel,$commandesModel,$panierQuantite);
+            $panierModel = $this->panierModel->ajouterAuPanier($user,$produitModel,$panierQuantite);
         }else{
             $panierQuantite['quantite'] += 1;
-            $this->panierModel->modifierQuantitePanier($id,$panierQuantite,$user);
+            $panierModel = $this->panierModel->modifierQuantitePanier($id,$panierQuantite,$user);
         }
 
         return $app->redirect($app["url_generator"]->generate("Panier.index"));
@@ -63,10 +62,10 @@ class PanierController implements ControllerProviderInterface{
 
         if ($panierModel['quantite'] == 1){
             var_dump($panierModel['quantite']);
-            $this->panierModel->supprimerProduitDuPanier($id);
+            $panierModel = $this->panierModel->supprimerProduitDuPanier($id);
         }else{
             $panierModel['quantite'] -= 1;
-            $this->panierModel->modifierQuantitePanier($panierModel['produit_id'],$panierModel,$user);
+            $panierModel = $this->panierModel->modifierQuantitePanier($panierModel['produit_id'],$panierModel,$user);
         }
 
         return $app->redirect($app["url_generator"]->generate("Panier.index"));

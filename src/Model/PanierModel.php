@@ -16,9 +16,19 @@ class PanierModel{
         $queryBuilder
             ->select('panier.id','panier.quantite','panier.prix','panier.dateAjoutPanier','panier.produit_id','panier.user_id')
             ->from('paniers', 'panier')
-            ->where('panier.user_id = '.$user);
+            ->where('panier.user_id = '.$user." and commande_id is NULL");
 
          return $queryBuilder->execute()->fetchAll();
+    }
+
+    public function getQuantiteEtPrix($user){
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('quantite','prix')
+            ->from('paniers')
+            ->where('user_id='.$user);
+
+        return $queryBuilder->execute()->fetchAll();
     }
 
     public function getQuantiteById($id,$user){
@@ -31,7 +41,7 @@ class PanierModel{
         return $queryBuilder->execute()->fetch();
     }
 
-    public function ajouterAuPanier($user,$produitModel,$commandeModel,$panierQuantite){
+    public function ajouterAuPanier($user,$produitModel,$panierQuantite){
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder
             ->insert('paniers')
@@ -41,13 +51,12 @@ class PanierModel{
                     'dateAjoutPanier' => 'CURDATE()',
                     'user_id' => '?',
                     'produit_id' => '?',
-                    'commande_id' => '?'
+                    'commande_id' => 'NULL'
             ])
             ->setParameter(0,$panierQuantite['quantite'])
             ->setParameter(1,$produitModel['prix'])
             ->setParameter(2,$user)
             ->setParameter(3,$produitModel['id'])
-            ->setParameter(4,$commandeModel['count(id)'])
         ;
         return $queryBuilder->execute();
     }
@@ -81,6 +90,27 @@ class PanierModel{
         $queryBuilder
             ->delete('paniers')
             ->where('id='.$id);
+
+        return $queryBuilder->execute();
+    }
+
+    public function getPrixByPanier($user){
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('SUM(prix) as prixTotal')
+            ->from('paniers')
+            ->where('user_id='.$user." and commande_id is null");
+
+        return $queryBuilder->execute()->fetch();
+    }
+
+    public function miseAJourPanierApresCommande($user,$commande){
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->update('paniers')
+            ->set('commande_id','?')
+            ->where('user_id='.$user.' and commande_id is null')
+            ->setParameter(0,$commande);
 
         return $queryBuilder->execute();
     }
