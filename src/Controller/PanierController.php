@@ -10,9 +10,7 @@ use Silex\Application;
 class PanierController implements ControllerProviderInterface{
 
     private $produitModel;
-    private $typeProduitModel;
     private $panierModel;
-    private $commandesModel;
     private $panierQuantite;
 
     public function index(Application $app){
