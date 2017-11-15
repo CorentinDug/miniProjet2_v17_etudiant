@@ -61,13 +61,23 @@ class PanierModel{
         return $queryBuilder->execute();
     }
 
+    public function getIDWhereNull($user,$id){
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('id')
+            ->from('paniers')
+            ->where('user_id='.$user.' and commande_id is null and id='.$id);
+
+        return $queryBuilder->execute()->fetchAll();
+    }
+
     public function modifierQuantitePanier($id,$panierQuantite,$user)
     {
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder
             ->update('paniers')
             ->set('quantite','?')
-            ->where('produit_id='.$id.' and user_id='.$user)
+            ->where('produit_id='.$id.' and user_id='.$user.' and commande_id is null')
             ->setParameter(0,$panierQuantite['quantite']);
 
         return $queryBuilder->execute();
@@ -97,7 +107,7 @@ class PanierModel{
     public function getPrixByPanier($user){
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder
-            ->select('SUM(prix) as prixTotal')
+            ->select('SUM(prix * quantite) as prixTotal')
             ->from('paniers')
             ->where('user_id='.$user." and commande_id is null");
 
@@ -113,5 +123,16 @@ class PanierModel{
             ->setParameter(0,$commande);
 
         return $queryBuilder->execute();
+    }
+
+    public function getCommandeByID($user,$id){
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('produit.nom','panier.quantite','panier.prix')
+            ->from('paniers', 'panier')
+            ->innerJoin('panier','produits','produit','panier.produit_id=produit.id')
+            ->where('user_id='.$user." and commande_id=".$id);
+
+        return $queryBuilder->execute()->fetchAll();
     }
 }

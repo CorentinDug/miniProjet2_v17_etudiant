@@ -26,8 +26,9 @@ class CommandesModel
     {
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder
-            ->select('id','user_id','prix','date_achat','etat_id')
-            ->from('commandes')
+            ->select('c.id','c.user_id','c.prix','c.date_achat','e.libelle')
+            ->from('etats', 'e')
+            ->innerJoin('e','commandes','c','c.etat_id=e.id')
             ->where('user_id='.$user);
 
         return $queryBuilder->execute()->fetchAll();
