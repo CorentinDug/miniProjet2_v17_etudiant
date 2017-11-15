@@ -42,9 +42,8 @@ class PanierController implements ControllerProviderInterface{
         $panierQuantite = $this->panierQuantite->getQuantiteById($id,$user);
 
         $this->panierModel = new PanierModel($app);
-        $panierId =$this->panierModel->getIDWhereNull($user,$id);
 
-        if ($panierQuantite['quantite'] == null || $panierId['id'] == null){
+        if ($panierQuantite['quantite'] == null){
             $panierQuantite['quantite'] = 1;
             $panierModel = $this->panierModel->ajouterAuPanier($user,$produitModel,$panierQuantite);
         }else{
