@@ -36,35 +36,41 @@ class clientController implements ControllerProviderInterface
     }
 
     public function validFormEditClient(Application $app, Request $req) {
-        if (isset($_POST['nom']) && isset($_POST['typeProduit_id']) and isset($_POST['nom']) and isset($_POST['photo']) and isset($_POST['id'])) {
+        if (isset($_POST['nom']) && isset($_POST['username']) and isset($_POST['code_postal']) and isset($_POST['adresse']) and isset($_POST['id']) and isset($_POST['ville'])) {
             $donnees = [
                 'nom' => htmlspecialchars($_POST['nom']),                    // echapper les entrées
-                'typeProduit_id' => htmlspecialchars($req->get('typeProduit_id')),  //$app['request']-> ne focntionne plus
-                'prix' => htmlspecialchars($req->get('prix')),
-                'photo' => $app->escape($req->get('photo')),  //$req->query->get('photo')-> ne focntionne plus
+                'username' => htmlspecialchars($req->get('username')),  //$app['request']-> ne focntionne plus
+                'code_postal' => htmlspecialchars($req->get('code_postal')),
+                'adresse' => $app->escape($req->get('adresse')),  //$req->query->get('photo')-> ne focntionne plus
+                'ville' => $app->escape($req->get('ville')),  //$req->query->get('photo')-> ne focntionne plus
                 'id' => $app->escape($req->get('id'))//$req->query->get('photo')
             ];
             if ((! preg_match("/^[A-Za-z ]{2,}/",$donnees['nom']))) $erreurs['nom']='nom composé de 2 lettres minimum';
-            if(! is_numeric($donnees['typeProduit_id']))$erreurs['typeProduit_id']='veuillez saisir une valeur';
-            if(! is_numeric($donnees['prix']))$erreurs['prix']='saisir une valeur numérique';
-            if (! preg_match("/[A-Za-z0-9]{2,}.(jpeg|jpg|png)/",$donnees['photo'])) $erreurs['photo']='nom de fichier incorrect (extension jpeg , jpg ou png)';
+            if ((! preg_match("/^[A-Za-z ]{2,}/",$donnees['username']))) $erreurs['username']='pseudo composé de 2 lettres minimum';
+            if ((! preg_match("/^[A-Za-z ]{2,}/",$donnees['adresse']))) $erreurs['adresse']='adresse composé de 2 lettres minimum';
+            if ((! preg_match("/^[A-Za-z ]{2,}/",$donnees['ville']))) $erreurs['ville']='ville composé de 2 lettres minimum';
+            if(! is_numeric($donnees['code_postal']))$erreurs['code_postal']='saisir une valeur numérique';
             if(! is_numeric($donnees['id']))$erreurs['id']='saisir une valeur numérique';
             $contraintes = new Assert\Collection(
                 [
                     'id' => [new Assert\NotBlank(),new Assert\Type('digit')],
-                    'typeProduit_id' => [new Assert\NotBlank(),new Assert\Type('digit')],
+                    'username' => [
+                        new Assert\NotBlank(['message'=>'saisir une valeur']),
+                        new Assert\Length(['min'=>2, 'minMessage'=>"Le nom doit faire au moins {{ limit }} caractères."])
+                    ],
                     'nom' => [
                         new Assert\NotBlank(['message'=>'saisir une valeur']),
                         new Assert\Length(['min'=>2, 'minMessage'=>"Le nom doit faire au moins {{ limit }} caractères."])
                     ],
                     //http://symfony.com/doc/master/reference/constraints/Regex.html
-                    'photo' => [
-                        new Assert\Length(array('min' => 5)),
-                        new Assert\Regex([ 'pattern' => '/[A-Za-z0-9]{2,}.(jpeg|jpg|png)/',
-                            'match'   => true,
-                            'message' => 'nom de fichier incorrect (extension jpeg , jpg ou png)' ]),
+                    'adresse' => [
+                        new Assert\NotBlank(['message'=>'saisir une valeur']),
+                        new Assert\Length(['min'=>2, 'minMessage'=>"Le nom doit faire au moins {{ limit }} caractères."])
+                    ],'ville' => [
+                        new Assert\NotBlank(['message'=>'saisir une valeur']),
+                        new Assert\Length(['min'=>2, 'minMessage'=>"Le nom doit faire au moins {{ limit }} caractères."])
                     ],
-                    'prix' => new Assert\Type(array(
+                    'code_postal' => new Assert\Type(array(
                         'type'    => 'numeric',
                         'message' => 'La valeur {{ value }} n\'est pas valide, le type est {{ type }}.',
                     ))
@@ -72,15 +78,15 @@ class clientController implements ControllerProviderInterface
             $errors = $app['validator']->validate($donnees,$contraintes);  // ce n'est pas validateValue
 
             if (count($errors) > 0) {
-                $this->typeProduitModel = new TypeProduitModel($app);
-                $typeProduits = $this->typeProduitModel->getAllTypeProduits();
-                return $app["twig"]->render('backOff/Produit/editProduit.html.twig',['donnees'=>$donnees,'errors'=>$errors,'erreurs'=>$erreurs,'typeProduits'=>$typeProduits]);
+                $this->clientModel = new clientModel($app);
+                $typeProduits = $this->clientModel->getCoordonneesClientById($donnees['id']);
+                return $app["twig"]->render('frontOff/client/editClientCoordonnees.html.twig',['donnees'=>$donnees,'errors'=>$errors,'erreurs'=>$erreurs]);
             }
             else
             {
-                $this->ProduitModel = new ProduitModel($app);
-                $this->ProduitModel->updateProduit($donnees);
-                return $app->redirect($app["url_generator"]->generate("produit.index"));
+                $this->clientModel = new clientModel($app);
+                $this->clientModel->editClient($donnees);
+                return $app->redirect($app["url_generator"]->generate("client.index"));
             }
 
         }

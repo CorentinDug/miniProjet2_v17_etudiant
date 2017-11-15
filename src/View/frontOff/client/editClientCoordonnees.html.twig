@@ -38,7 +38,13 @@
                         <small class="error">message 2{{errors.code_postal.message}}</small>
                     {% endif %}
                 </label>
-                <label>Photo
+                <label>Ville
+                    <input name="ville"  type="text"  size="18" value="{{donnees.adresse}}"/>
+                    {% if erreurs.adresse is defined %}
+                        <small class="error">{{erreurs.adresse}}</small>
+                    {% endif %}
+                </label>
+                <label>Adresse
                     <input name="adresse"  type="text"  size="18" value="{{donnees.adresse}}"/>
                     {% if erreurs.adresse is defined %}
                         <small class="error">{{erreurs.adresse}}</small>
