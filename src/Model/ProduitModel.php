@@ -85,6 +85,16 @@ class ProduitModel {
         return $queryBuilder->execute();
     }
 
+    public function getProduitByNom($nom)
+    {
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('id', 'typeProduit_id', 'nom', 'prix', 'photo','dispo','stock')
+            ->from('produits')
+            ->where('nom=:nom')
+            ->setParameter('nom',(string)$nom);
+        return $queryBuilder->execute()->fetchAll();
+    }
 
 
 }

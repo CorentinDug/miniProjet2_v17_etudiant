@@ -157,6 +157,23 @@ class ProduitController implements ControllerProviderInterface
 
     }
 
+    public function researchProduit(Application $app, Request $req){
+        if (isset($_POST['nom'])){
+            $donnee = [
+                'nom' =>htmlspecialchars($_POST['nom'])
+            ];
+        }else{
+            return $app['twig']->render('frontOff/client/researchProduit.html.twig');
+
+        }
+
+        if (!empty($donnee)){
+            $this->produitModel = new ProduitModel($app);
+            $donneeProduit = $this->produitModel->getProduitByNom($donnee['nom']);
+            return $app['twig']->render('frontOff/client/researchProduit.html.twig',['donnees'=>$donnee,'donneesProduit' => $donneeProduit]);
+        }
+    }
+
     public function connect(Application $app) {  //http://silex.sensiolabs.org/doc/providers.html#controller-providers
         $controllers = $app['controllers_factory'];
 
@@ -173,6 +190,7 @@ class ProduitController implements ControllerProviderInterface
         $controllers->get('/edit/{id}', 'App\Controller\produitController::editProduit')->bind('produit.editProduit')->assert('id', '\d+');
         $controllers->put('/edit', 'App\Controller\produitController::validFormEditProduit')->bind('produit.validFormEditProduit');
 
+        $controllers->match('/find','App\Controller\produitController::researchProduit')->bind('produitClient.find');
         return $controllers;
     }
 }

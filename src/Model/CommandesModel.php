@@ -3,6 +3,7 @@ namespace App\Model;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Silex\Application;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class CommandesModel
 {
@@ -34,6 +35,12 @@ class CommandesModel
         return $queryBuilder->execute()->fetchAll();
     }
 
+    /**
+     * @param $user
+     * @param $prix
+     * @return \Doctrine\DBAL\Driver\Statement|int
+     * Permet de passer une commande MAIS SANS TRANSACTION
+     */
     public function addCommandesByClient($user,$prix){
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder
@@ -48,6 +55,26 @@ class CommandesModel
             ->setParameter(1,$prix);
 
         return $queryBuilder->execute();
+    }
+
+    /**
+     * @param $user
+     * @param $prix
+     * Permet de passer la commande AVEC UNE TRANSACTION
+     */
+    public function addCommandesByClientWithTransaction($user,$prix){
+        try{
+            $this->db->beginTransaction();
+            $this->db->query("INSERT INTO commandes (user_id,prix,date_achat,etat_id) VALUES ('".$user."','".$prix."',CURDATE(),1);");
+            $this->db->commit();
+        }
+        catch (Exception $e){
+            $this->db->rollback();
+            echo 'Tout ne s\'est pas bien passé, voir les erreurs ci-dessous<br />';
+            echo 'Erreur : '.$e->getMessage().'<br />';
+            echo 'N° : '.$e->getCode();
+            exit();
+        }
     }
 
     public function getIDCommande($user,$prix){
