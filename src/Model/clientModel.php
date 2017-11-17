@@ -21,7 +21,7 @@ class clientModel
 
         return $queryBuilder->execute()->fetch();
     }
-    
+
     public function editClient($donnees) {
         $queryBuilder = new QueryBuilder($this->db);
         $queryBuilder
