@@ -21,4 +21,23 @@ class clientModel
 
         return $queryBuilder->execute()->fetch();
     }
+    
+    public function editClient($donnees) {
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->update('users')
+            ->set('nom', '?')
+            ->set('username','?')
+            ->set('code_postal','?')
+            ->set('adresse','?')
+            ->set('ville','?')
+            ->where('id= ?')
+            ->setParameter(0, $donnees['nom'])
+            ->setParameter(1, $donnees['username'])
+            ->setParameter(2, $donnees['code_postal'])
+            ->setParameter(3, $donnees['adresse'])
+            ->setParameter(4, $donnees['ville'])
+            ->setParameter(5, $donnees['id']);
+        return $queryBuilder->execute();
+    }
 }
