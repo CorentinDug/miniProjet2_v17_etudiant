@@ -34,7 +34,9 @@
                 <tbody>
             </table>
         {% else %}
-            <h1 align="center" style="color: red">Aucun produit ne correspond au nom que vous avez entré.</h1>
+            {% if donneesProduit is defined and donneesProduit is empty %}
+                <h1 align="center" style="color: red">Aucun produit ne correspond au nom que vous avez entré.</h1>
+            {% endif %}
         {% endif %}
     </div>
 
