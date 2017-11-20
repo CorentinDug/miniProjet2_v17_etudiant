@@ -39,7 +39,7 @@ class commandeController implements ControllerProviderInterface
         $commandeId = $commandeID['id'];
         $this->panierAMettreAJour->miseAJourPanierApresCommande($user,$commandeId);
 
-        return $app->redirect($app["url_generator"]->generate("commande.index"));
+        return $app->redirect($app["url_generator"]->generate("Panier.index"));
     }
 
     public function connect(Application $app)
