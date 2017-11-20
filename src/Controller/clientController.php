@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\Request;   // pour utiliser request
 
 use App\Model\clientModel;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security;
 class clientController implements ControllerProviderInterface
 {
@@ -55,7 +54,7 @@ class clientController implements ControllerProviderInterface
 
             if (!empty($erreurs)) {
                 $this->clientModel = new clientModel($app);
-                $typeProduits = $this->clientModel->getCoordonneesClientById($donnees['id']);
+                $this->clientModel->getCoordonneesClientById($donnees['id']);
                 return $app["twig"]->render('frontOff/client/editClientCoordonnees.html.twig',['donnees'=>$donnees,'erreurs'=>$erreurs]);
             }
             else
