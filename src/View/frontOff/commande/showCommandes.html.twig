@@ -13,7 +13,7 @@
                 <tbody>
                 {% for produit in donneesCommande %}
                     <tr>
-                        <td>{{produit.id}}</td><td>{{produit.user_id}}</td><td>{{produit.prix}}</td>
+                        <td>{{produit.id}}</td><td>{{produit.user_id}}</td><td>{{produit.prix}} €</td>
                         <td>{{ produit.date_achat }}</td><td>{{ produit.libelle }}</td>
                         <td><a href="{{ path('Panier.showCommande',{id: produit.id}) }}">Détails de la commande</a></td>
                     </tr>

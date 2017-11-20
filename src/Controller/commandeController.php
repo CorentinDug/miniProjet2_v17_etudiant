@@ -34,12 +34,12 @@ class commandeController implements ControllerProviderInterface
         $prixTotal = $this->prixTotalCommande->getPrixByPanier($user);
         $prix = $prixTotal['prixTotal'];
 
-        $this->commandeClient->addCommandesByClient($user,$prix);
+        $this->commandeClient->addCommandesByClientWithTransaction($user,$prix);
         $commandeID = $this->commandeClient->getIDCommande($user,$prix);
         $commandeId = $commandeID['id'];
         $this->panierAMettreAJour->miseAJourPanierApresCommande($user,$commandeId);
 
-        return $app->redirect($app["url_generator"]->generate("Panier.index"));
+        return $app->redirect($app["url_generator"]->generate("commande.index"));
     }
 
     public function connect(Application $app)

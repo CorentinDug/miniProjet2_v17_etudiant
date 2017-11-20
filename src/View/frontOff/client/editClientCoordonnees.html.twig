@@ -2,20 +2,8 @@
 {% block contenu %}
     <form method="post" action="{{ path('client.validFormEditClient') }}">
         <div class="row">
-
-            {% if errors is defined %}
-                <div data-alert class="alert-box alert round">
-
-                    {% for error in errors %}
-                        <li>{{ error.getPropertyPath }} : {{ error.getMessage }}</li>
-                    {% endfor %}
-
-                    <a href="#" class="close">&times;</a>
-                </div>
-            {% endif %}
-
             <fieldset>
-                <legend>Modifier vos coordonnées  (avec twig)</legend>
+                <legend>Modifier vos coordonnées personnelles</legend>
                 <input name="id"  type="hidden" value="{{donnees.id}}" />
                 <label>Nom :
                     <input name="nom"  type="text"  size="18" value="{{donnees.nom}}" />
@@ -29,22 +17,25 @@
                         <small class="error">{{erreurs.username}}</small>
                     {% endif %}
                 </label>
-                <label>Code postal
+                <label>E-Mail :
+                    <input name="email"  type="text"  size="18" value="{{donnees.email}}" />
+                    {% if erreurs.email is defined %}
+                        <small class="error">{{erreurs.email}}</small>
+                    {% endif %}
+                </label>
+                <label>Code postal :
                     <input name="code_postal"  type="text"  size="18" 	value="{{donnees.code_postal}}"/>
                     {% if erreurs.code_postal is defined %}
                         <small class="error">{{erreurs.code_postal}}</small>
                     {% endif %}
-                    {% if errors.code_postal is defined %}
-                        <small class="error">message 2{{errors.code_postal.message}}</small>
-                    {% endif %}
                 </label>
-                <label>Ville
-                    <input name="ville"  type="text"  size="18" value="{{donnees.adresse}}"/>
+                <label>Ville :
+                    <input name="ville"  type="text"  size="18" value="{{donnees.ville}}"/>
                     {% if erreurs.adresse is defined %}
-                        <small class="error">{{erreurs.adresse}}</small>
+                        <small class="error">{{erreurs.ville}}</small>
                     {% endif %}
                 </label>
-                <label>Adresse
+                <label>Adresse :
                     <input name="adresse"  type="text"  size="18" value="{{donnees.adresse}}"/>
                     {% if erreurs.adresse is defined %}
                         <small class="error">{{erreurs.adresse}}</small>

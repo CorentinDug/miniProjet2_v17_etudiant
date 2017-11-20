@@ -1,0 +1,43 @@
+{% extends "layout.html.twig" %}
+
+{% block contenu %}
+
+    <form method="post" action="{{ path('produitClient.find')}}">
+        <div class="row">
+            <fieldset>
+                <legend>Rechercher un produit</legend>
+                <label>Nom du produit à rechercher :
+                    <input name="nom"  type="text"  size="18" value="{{ donnees.nom|default("") }}" />
+                </label>
+                <input type="hidden" id="_method" name="_method" value="put" />
+                <input type="submit" name="researchProduit" value="Rechercher" />
+            </fieldset>
+        </div>
+    </form>
+
+    <div class="row">
+        {% if donneesProduit is defined and donneesProduit is not empty %}
+            <table align="center">
+                <caption>Détails du produit</caption>
+                <thead>
+                <tr>
+                    <th>ID du produit</th><th>Type du produit</th><th>Nom du produit</th><th>Photo du produit</th><th>Disponibilité du produit</th><th>Produit(s) en stock</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for produit in donneesProduit %}
+                    <tr>
+                        <td>{{produit.id}}</td><td>{{produit.typeProduit_id}}</td><td>{{produit.nom}}</td>
+                        <td>{{ produit.photo }}</td><td>{{ produit.dispo }}</td> <td>{{ produit.stock }}</td>
+                    </tr>
+                {% endfor %}
+                <tbody>
+            </table>
+        {% else %}
+            {% if donneesProduit is defined and donneesProduit is empty %}
+                <h1 align="center" style="color: red">Aucun produit ne correspond au nom que vous avez entré.</h1>
+            {% endif %}
+        {% endif %}
+    </div>
+
+{% endblock %}

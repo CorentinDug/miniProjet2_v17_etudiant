@@ -28,16 +28,18 @@ class clientModel
             ->update('users')
             ->set('nom', '?')
             ->set('username','?')
+            ->set('email','?')
             ->set('code_postal','?')
             ->set('adresse','?')
             ->set('ville','?')
             ->where('id= ?')
             ->setParameter(0, $donnees['nom'])
             ->setParameter(1, $donnees['username'])
-            ->setParameter(2, $donnees['code_postal'])
-            ->setParameter(3, $donnees['adresse'])
-            ->setParameter(4, $donnees['ville'])
-            ->setParameter(5, $donnees['id']);
+            ->setParameter(2, $donnees['email'])
+            ->setParameter(3, $donnees['code_postal'])
+            ->setParameter(4, $donnees['adresse'])
+            ->setParameter(5, $donnees['ville'])
+            ->setParameter(6, $donnees['id']);
         return $queryBuilder->execute();
     }
 }
