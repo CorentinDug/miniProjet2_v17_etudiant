@@ -165,6 +165,7 @@ class ProduitController implements ControllerProviderInterface
                 'typeProduit_id' =>htmlspecialchars($_POST['typeProduit_id'])
             ];
         }else{
+            //var_dump($typeProduit);
             return $app['twig']->render('frontOff/client/researchProduit.html.twig',['typeProduits'=> $typeProduit]);
         }
 
