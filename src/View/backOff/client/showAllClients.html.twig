@@ -2,6 +2,9 @@
 
 {% block contenu %}
     <div class="row">
+
+        {#Rajouter un lien pour ajouter un client#}
+
         {% if donneesCommande is not empty %}
             <table align="center">
                 <caption>Détails des commandes passées par les clients</caption>
@@ -17,14 +20,14 @@
                         <td>{{ produit.date_achat }}</td><td>{{ produit.libelle }}</td>
                         <td><a href="{{ path('commande.voirCommande',{id: produit.id}) }}">Détails de la commande</a></td>
                         {% if produit.etat_id != 3 %}
-                        <td><a href="{{ path('commande.modifierEtat',{id: produit.id}) }}">Modifier l'état de la commande</a></td>
+                            <td><a href="{{ path('commande.modifierEtat',{id: produit.id}) }}">Modifier l'état de la commande</a></td>
                         {% endif %}
                     </tr>
                 {% endfor %}
                 <tbody>
             </table>
         {% else %}
-            <h1 align="center" style="color: red">Aucune commande n'a été passée pour le moment</h1>
+            <h1 align="center" style="color: red">Vous n'avez aucuns clients</h1>
         {% endif %}
     </div>
 

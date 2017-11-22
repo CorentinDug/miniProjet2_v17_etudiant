@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Model\PanierModel;
 use Silex\Application;
 use Silex\Api\ControllerProviderInterface;
 
@@ -70,10 +71,19 @@ class clientController implements ControllerProviderInterface
             return $app->abort(404, 'error Pb id form edit');
     }
 
+    public function voirTousLesClients(Application $app){
+        $this->clientModel = new clientModel($app);
+        $donneesClient = $this->clientModel->getAllClient();
+
+        //return app twig
+        return 0;
+    }
+
     public function connect(Application $app)
     {
         $index = $app['controllers_factory'];
         $index->match("/", 'App\Controller\clientController::showCoordonneesClient')->bind('client.index');
+        $index->match("/showAllClient", 'App\Controller\clientController::voirTousLesClients')->bind('client.showAll');
         $index->get("/update/{id}", 'App\Controller\clientController::modifierCoordonnees')->bind('client.update');
         $index->put("/update/", 'App\Controller\clientController::validFormEditClient')->bind('client.validFormEditClient');
         return $index;

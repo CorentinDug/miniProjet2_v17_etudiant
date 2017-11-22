@@ -42,4 +42,15 @@ class clientModel
             ->setParameter(6, $donnees['id']);
         return $queryBuilder->execute();
     }
+
+    public function getAllClient()
+    {
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select ('id','username','email','nom','adresse','ville','code_postal')
+            ->from('users')
+            ->where('roles = ROLE_CLIENT');
+
+        return $queryBuilder->execute()->fetchAll();
+    }
 }
