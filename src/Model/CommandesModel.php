@@ -120,6 +120,6 @@ class CommandesModel
             ->from('commandes', 'c')
             ->where('c.id='.$id);
 
-        return $queryBuilder->execute()->fetchAll();
+        return $queryBuilder->execute()->fetch();
     }
 }

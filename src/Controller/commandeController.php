@@ -54,6 +54,7 @@ class commandeController implements ControllerProviderInterface
     public function modifierEtatCommande(Application $app,$id){
         $this->commandeClient = new CommandesModel($app);
         $etat_id = $this->commandeClient->getEtatID($id);
+        var_dump($etat_id);
         $etat_id['etat_id'] +=1;
         if ($etat_id['etat_id'] < 4){
             $this->commandeClient->modifierEtatCommandes($id,$etat_id);
