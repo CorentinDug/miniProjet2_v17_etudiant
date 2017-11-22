@@ -5,15 +5,24 @@
     <form method="post" action="{{ path('produitClient.find')}}">
         <div class="row">
             <fieldset>
-                <legend>Rechercher un produit</legend>
-                <label>Nom du produit à rechercher :
-                    <input name="nom"  type="text"  size="18" value="{{ donnees.nom|default("") }}" />
+                <legend>Rechercher un produit via son type</legend>
+                <label>Type du produit
+                    <select name="typeProduit_id">
+                            <option value="0">Tous les produits</option>
+                        {% for typeProduit in typeProduits %}
+                            <option value="{{ typeProduit.id }}"
+                                    {% if donnees.typeProduit_id is defined and typeProduit.id == donnees.typeProduit_id %}selected{% endif %}>
+                                {{ typeProduit.libelle }}
+                            </option>
+                        {% endfor %}
+                    </select>
                 </label>
                 <input type="hidden" id="_method" name="_method" value="put" />
                 <input type="submit" name="researchProduit" value="Rechercher" />
             </fieldset>
         </div>
     </form>
+
 
     <div class="row">
         {% if donneesProduit is defined and donneesProduit is not empty %}

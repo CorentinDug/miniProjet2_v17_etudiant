@@ -1,0 +1,31 @@
+{% extends "layout.html.twig" %}
+
+{% block contenu %}
+    <div class="row">
+            <a href="{{ path('client.addClient') }}">Ajouter un client</a>
+        <br>
+        {% if donneesClient is not empty %}
+            <table align="center">
+                <caption>Détails de tous les clients</caption>
+                <thead>
+                <tr>
+                    <th>ID du client</th><th>Nom de compte du client</th><th>Nom du client</th><th>E-Mail du client</th><th>Adresse du client</th><th>Ville du client</th><th>Code postal du client</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for client in donneesClient %}
+                    <tr>
+                        <td>{{client.id}}</td><td>{{client.username}}</td><td>{{client.nom}}</td>
+                        <td>{{ client.email }}</td><td>{{ client.adresse }}</td><td>{{ client.ville }}</td><td>{{ client.code_postal }}</td>
+                        <td><a href="{{ path('client.update',{id: client.id}) }}">Modifier</a></td>
+                        <td><a href="{{ path('client.delete',{id: client.id}) }}">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+                <tbody>
+            </table>
+        {% else %}
+            <h1 align="center" style="color: red">Vous n'avez aucuns clients</h1>
+        {% endif %}
+    </div>
+
+{% endblock %}
