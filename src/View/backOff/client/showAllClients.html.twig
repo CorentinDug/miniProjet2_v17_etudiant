@@ -2,26 +2,23 @@
 
 {% block contenu %}
     <div class="row">
-
-        {#Rajouter un lien pour ajouter un client#}
-
-        {% if donneesCommande is not empty %}
+            <a href="{{ path('client.addClient') }}">Ajouter un client</a>
+        <br>
+        {% if donneesClient is not empty %}
             <table align="center">
-                <caption>Détails des commandes passées par les clients</caption>
+                <caption>Détails de tous les clients</caption>
                 <thead>
                 <tr>
-                    <th>ID de la commande</th><th>ID de l'utilisateur</th><th>Prix total de la commande</th><th>Date de passage de la commande</th><th>Etat de la commande</th>
+                    <th>ID du client</th><th>Nom de compte du client</th><th>Nom du client</th><th>E-Mail du client</th><th>Adresse du client</th><th>Ville du client</th><th>Code postal du client</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for produit in donneesCommande %}
+                {% for client in donneesClient %}
                     <tr>
-                        <td>{{produit.id}}</td><td>{{produit.user_id}}</td><td>{{produit.prix}} €</td>
-                        <td>{{ produit.date_achat }}</td><td>{{ produit.libelle }}</td>
-                        <td><a href="{{ path('commande.voirCommande',{id: produit.id}) }}">Détails de la commande</a></td>
-                        {% if produit.etat_id != 3 %}
-                            <td><a href="{{ path('commande.modifierEtat',{id: produit.id}) }}">Modifier l'état de la commande</a></td>
-                        {% endif %}
+                        <td>{{client.id}}</td><td>{{client.username}}</td><td>{{client.nom}}</td>
+                        <td>{{ client.email }}</td><td>{{ client.adresse }}</td><td>{{ client.ville }}</td><td>{{ client.code_postal }}</td>
+                        <td><a href="{{ path('client.update',{id: client.id}) }}">Modifier</a></td>
+                        <td><a href="{{ path('client.delete',{id: client.id}) }}">Supprimer</a></td>
                     </tr>
                 {% endfor %}
                 <tbody>

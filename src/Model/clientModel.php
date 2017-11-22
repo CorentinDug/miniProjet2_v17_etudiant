@@ -49,8 +49,45 @@ class clientModel
         $queryBuilder
             ->select ('id','username','email','nom','adresse','ville','code_postal')
             ->from('users')
-            ->where('roles = ROLE_CLIENT');
+            ->where('roles = "ROLE_CLIENT"');
 
         return $queryBuilder->execute()->fetchAll();
+    }
+
+    public function addClient($donnees)
+    {
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->insert('users')
+            ->values([
+                'nom'=> '?',
+                'username'=>'?',
+                'email'=>'?',
+                'code_postal'=>'?',
+                'ville'=>'?',
+                'adresse'=>'?',
+                'motdepasse'=>'?'
+            ])
+
+            ->where('id= ?')
+            ->setParameter(0, $donnees['nom'])
+            ->setParameter(1, $donnees['username'])
+            ->setParameter(2, $donnees['email'])
+            ->setParameter(3, $donnees['code_postal'])
+            ->setParameter(4, $donnees['ville'])
+            ->setParameter(5, $donnees['adresse'])
+            ->setParameter(6, $donnees['motdepasse']);
+        return $queryBuilder->execute();
+    }
+
+    public function deleteClient($id)
+    {
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->delete('users')
+            ->where('id = :id')
+            ->setParameter('id',(int)$id)
+        ;
+        return $queryBuilder->execute();
     }
 }

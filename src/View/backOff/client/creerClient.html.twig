@@ -1,0 +1,53 @@
+{% extends "layout.html.twig" %}
+{% block contenu %}
+    <form method="post" action="{{ path('client.validFormAddClient') }}">
+        <div class="row">
+            <fieldset>
+                <legend>Ajouter un client</legend>
+                <label>Username/Login :
+                    <input name="username"  type="text"  size="18" value="{{donnees.username|default('')}}" />
+                    {% if erreurs.username is defined %}
+                        <small class="error">{{erreurs.username}}</small>
+                    {% endif %}
+                </label>
+                <label>Mot de passe :
+                    <input name="motdepasse"  type="text"  size="18" value="{{donnees.motdepasse|default('')}}" />
+                    {% if erreurs.motdepasse is defined %}
+                        <small class="error">{{erreurs.motdepasse}}</small>
+                    {% endif %}
+                </label>
+                <label>E-Mail du client :
+                    <input name="email"  type="text"  size="18" 	value="{{donnees.email|default('')}}"/>
+                    {% if erreurs.email is defined %}
+                        <small class="error">{{erreurs.email}}</small>
+                    {% endif %}
+                </label>
+                <label>Nom du client :
+                    <input name="nom"  type="text"  size="18" value="{{donnees.nom|default('')}}"/>
+                    {% if erreurs.nom is defined %}
+                        <small class="error">{{erreurs.nom}}</small>
+                    {% endif %}
+                </label>
+                <label>Code postal de la ville du client :
+                    <input name="code_postal"  type="text"  size="18" value="{{donnees.code_postal|default('')}}"/>
+                    {% if erreurs.code_postal is defined %}
+                        <small class="error">{{erreurs.code_postal}}</small>
+                    {% endif %}
+                </label>
+                <label>Ville du client :
+                    <input name="ville"  type="text"  size="18" value="{{donnees.ville|default('')}}"/>
+                    {% if erreurs.ville is defined %}
+                        <small class="error">{{erreurs.ville}}</small>
+                    {% endif %}
+                </label>
+                <label>Adresse du client :
+                    <input name="adresse"  type="text"  size="18" value="{{donnees.adresse|default('')}}"/>
+                    {% if erreurs.adresse is defined %}
+                        <small class="error">{{erreurs.adresse}}</small>
+                    {% endif %}
+                </label>
+                <input type="submit" name="ajouterClient" value="Ajouter un client" />
+            </fieldset>
+        </div>
+    </form>
+{% endblock %}
