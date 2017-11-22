@@ -30,7 +30,8 @@ class CommandesModel
             ->select('c.id','c.user_id','c.prix','c.date_achat','e.libelle')
             ->from('etats', 'e')
             ->innerJoin('e','commandes','c','c.etat_id=e.id')
-            ->where('user_id='.$user);
+            ->where('user_id='.$user)
+            ->orderBy('c.id');
 
         return $queryBuilder->execute()->fetchAll();
     }
@@ -85,5 +86,40 @@ class CommandesModel
             ->where('user_id='.$user.' and prix='.$prix.' and date_achat = (select MAX(date_achat) from commandes)');
 
         return $queryBuilder->execute()->fetch();
+    }
+
+    public function getAllCommandes()
+    {
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('c.id','c.user_id','c.prix','c.date_achat','e.libelle','c.etat_id')
+            ->from('etats', 'e')
+            ->innerJoin('e','commandes','c','c.etat_id=e.id')
+            ->orderBy('c.id');
+
+        return $queryBuilder->execute()->fetchAll();
+    }
+
+    public function modifierEtatCommandes($id,$etat_id)
+    {
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->update('commandes')
+            ->set('etat_id','?')
+            ->where('id='.$id)
+            ->setParameter(0,$etat_id['etat_id']);
+
+        return $queryBuilder->execute();
+    }
+
+    public function getEtatID($id)
+    {
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('c.etat_id')
+            ->from('commandes', 'c')
+            ->where('c.id='.$id);
+
+        return $queryBuilder->execute()->fetchAll();
     }
 }

@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS etats (
 INSERT INTO etats (id, libelle) VALUES
 (1, 'A préparer'),
 (2, 'Expédié');
+(3, 'Livré');
 
 -- --------------------------------------------------------
 -- Structure de la table produits

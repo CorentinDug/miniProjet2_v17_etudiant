@@ -125,4 +125,15 @@ class PanierModel{
 
         return $queryBuilder->execute()->fetchAll();
     }
+
+    public function getCommandeByCID($id){
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('p.id','prod.nom','p.quantite','p.prix','p.dateAjoutPanier')
+            ->from('produits', 'prod')
+            ->innerJoin('prod','paniers','p','p.produit_id=prod.id')
+            ->where('commande_id='.$id);
+
+        return $queryBuilder->execute()->fetchAll();
+    }
 }
