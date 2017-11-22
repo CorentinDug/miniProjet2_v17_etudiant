@@ -1,0 +1,15 @@
+{% extends "layout.html.twig" %}
+{% block contenu %}
+    <form method="post" action="{{ path('client.validFormDelete') }}">
+        <div class="row">
+            <fieldset>
+                <legend>Confirmer la suppression du client suivant : </legend>
+                <input name="id"  type="hidden" value="{{donneesClient.id}}" />
+                <label>Nom : <h5>{{donneesClient.nom}}</h5> </label>
+                <input type="hidden" id="_method" name="_method" value="delete" />
+
+                <input type="submit" name="supprimerClient" value="Supprimer un client" />
+            </fieldset>
+        </div>
+    </form>
+{% endblock %}

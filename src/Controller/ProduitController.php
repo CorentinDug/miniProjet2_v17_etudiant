@@ -157,20 +157,25 @@ class ProduitController implements ControllerProviderInterface
 
     }
 
-    public function researchProduit(Application $app, Request $req){
-        if (isset($_POST['nom'])){
+    public function researchProduit(Application $app){
+        $this->typeProduitModel = new TypeProduitModel($app);
+        $typeProduit = $this->typeProduitModel->getAllTypeProduits();
+        if (isset($_POST['typeProduit_id'])){
             $donnee = [
-                'nom' =>htmlspecialchars($_POST['nom'])
+                'typeProduit_id' =>htmlspecialchars($_POST['typeProduit_id'])
             ];
         }else{
-            return $app['twig']->render('frontOff/client/researchProduit.html.twig');
-
+            return $app['twig']->render('frontOff/client/researchProduit.html.twig',['typeProduits'=> $typeProduit]);
         }
 
-        if (!empty($donnee)){
+        if ($donnee['typeProduit_id'] == 0){
             $this->produitModel = new ProduitModel($app);
-            $donneeProduit = $this->produitModel->getProduitByNom($donnee['nom']);
-            return $app['twig']->render('frontOff/client/researchProduit.html.twig',['donnees'=>$donnee,'donneesProduit' => $donneeProduit]);
+            $donneeProduit = $this->produitModel->getAllProduits();
+            return $app['twig']->render('frontOff/client/researchProduit.html.twig',['donnees'=>$donnee,'donneesProduit' => $donneeProduit,'typeProduits'=> $typeProduit]);
+        }else {
+            $this->produitModel = new ProduitModel($app);
+            $donneeProduit = $this->produitModel->getProduitByProduitID($donnee['typeProduit_id']);
+            return $app['twig']->render('frontOff/client/researchProduit.html.twig',['donnees'=>$donnee,'donneesProduit' => $donneeProduit,'typeProduits'=> $typeProduit]);
         }
     }
 
