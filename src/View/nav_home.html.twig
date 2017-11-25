@@ -1,15 +1,14 @@
 <nav class="top-bar" data-topbar role="navigation">
-    <ul class="title-area"> 
-      <li class="name"> 
-        <h1><span style="padding-left: 10px;padding-right:10px;color: red;">Projet 2 WEB</span></h1>
-      </li> 
+    <ul class="title-area">
+        <li class="name" style="text-align: center">
+            Projet 2 WEB
+        </li>
       <li class="toggle-topbar menu-icon">
         <a href="#"><span>Menu</span></a>
       </li> 
     </ul> 
     <section class="top-bar-section">
       <ul class="left">
-        <li class="divider"></li>
         <li class="has-dropdown"><a href="#">produit</a>
           <ul class="dropdown">
             <li><a href="{{ path('produitClient.show') }}">afficher les produits</a></li>
@@ -18,7 +17,7 @@
       </ul>
         <ul class="right">
             {% if   app.session.get('logged') is defined and  app.session.get('logged') == 1 %}
-                <li class="name" style="color: #d58512">Connecté en tant que : {{ app.session.get('username') }}</li>
+                <li class="name" style="color: dodgerblue">Connecté en tant que : {{ app.session.get('username') }}</li>
                 <li><a href="{{ path('user.logout')  }}">Se déconnecter</a></li>
             {% else %}
                 <li><a href="{{ path('user.login')  }}">Se connecter</a></li>

@@ -1602,7 +1602,10 @@ form .row .postfix-round.row.collapse .postfix {
 
 input[type="submit"] {
   -webkit-appearance: none;
-  -webkit-border-radius: 0px; }
+  -webkit-border-radius: 0px;
+  border-radius: 15px;
+  background-color: grey;
+  color: black;}
 
 /* Respect enforced amount of rows for textarea */
 textarea[rows] {
@@ -1636,7 +1639,7 @@ select {
     border-radius: 3px; }
   select:hover {
     background-color: #f3f3f3;
-    border-color: #999999; }
+    border-color: orange; }
   select:disabled {
     background-color: #dddddd;
     cursor: default; }
@@ -1694,9 +1697,10 @@ span.error, small.error {
   margin-bottom: 1rem;
   font-size: 0.75rem;
   font-weight: normal;
-  font-style: italic;
+  font-style: normal;
   background: #f04124;
-  color: white; }
+  color: white;
+  border-radius : 15px;}
 
 .error input,
 .error textarea,
@@ -1773,7 +1777,7 @@ meta.foundation-mq-topbar {
   height: 45px;
   line-height: 45px;
   position: relative;
-  background: #333333;
+  background: orange;
   margin-bottom: 0; }
   .top-bar ul {
     margin-bottom: 0;
@@ -1801,9 +1805,10 @@ meta.foundation-mq-topbar {
     position: relative;
     margin: 0; }
   .top-bar .name {
-    height: 45px;
-    margin: 0;
-    font-size: 16px; }
+    height: 20px;
+    margin: 10px;
+    font-size: 16px;
+    font-style: italic;}
     .top-bar .name h1 {
       line-height: 45px;
       font-size: 1.0625rem;
@@ -1878,7 +1883,7 @@ meta.foundation-mq-topbar {
     height: 1px;
     width: 100%; }
   .top-bar-section ul li {
-    background: #333333; }
+    background: orange; }
     .top-bar-section ul li > a {
       display: block;
       width: 100%;
@@ -1903,11 +1908,11 @@ meta.foundation-mq-topbar {
       .top-bar-section ul li > a.button.secondary {
         background-color: #e7e7e7;
         border-color: #b9b9b9;
-        color: #333333; }
+        color: orange; }
         .top-bar-section ul li > a.button.secondary:hover, .top-bar-section ul li > a.button.secondary:focus {
           background-color: #b9b9b9; }
         .top-bar-section ul li > a.button.secondary:hover, .top-bar-section ul li > a.button.secondary:focus {
-          color: #333333; }
+          color: orange; }
       .top-bar-section ul li > a.button.success {
         background-color: #43ac6a;
         border-color: #368a55;
@@ -1946,11 +1951,11 @@ meta.foundation-mq-topbar {
       .top-bar-section ul li > button.secondary {
         background-color: #e7e7e7;
         border-color: #b9b9b9;
-        color: #333333; }
+        color: orange; }
         .top-bar-section ul li > button.secondary:hover, .top-bar-section ul li > button.secondary:focus {
           background-color: #b9b9b9; }
         .top-bar-section ul li > button.secondary:hover, .top-bar-section ul li > button.secondary:focus {
-          color: #333333; }
+          color: orange; }
       .top-bar-section ul li > button.success {
         background-color: #43ac6a;
         border-color: #368a55;
@@ -1978,7 +1983,7 @@ meta.foundation-mq-topbar {
     .top-bar-section ul li:hover:not(.has-form) > a {
       background-color: #555555;
       background: #272727;
-      color: white; }
+      color: orange; }
     .top-bar-section ul li.active > a {
       background: #008cba;
       color: white; }
@@ -2061,7 +2066,7 @@ meta.foundation-mq-topbar {
 
 @media only screen and (min-width: 40.063em) {
   .top-bar {
-    background: #333333;
+    background: orange;
     overflow: visible; }
     .top-bar:before, .top-bar:after {
       content: " ";
@@ -2071,7 +2076,8 @@ meta.foundation-mq-topbar {
     .top-bar .toggle-topbar {
       display: none; }
     .top-bar .title-area {
-      float: left; }
+      float: left;
+      }
     .top-bar .name h1 a {
       width: auto; }
     .top-bar input,
@@ -2081,7 +2087,7 @@ meta.foundation-mq-topbar {
       position: relative;
       top: 7px; }
     .top-bar.expanded {
-      background: #333333; }
+      background: orange; }
 
   .contain-to-grid .top-bar {
     max-width: 62.5rem;
@@ -2106,7 +2112,7 @@ meta.foundation-mq-topbar {
     .top-bar-section li:not(.has-form) a:not(.button) {
       padding: 0 15px;
       line-height: 45px;
-      background: #333333; }
+      background: orange; }
       .top-bar-section li:not(.has-form) a:not(.button):hover {
         background-color: #555555;
         background: #272727; }
@@ -2177,7 +2183,7 @@ meta.foundation-mq-topbar {
         color: white;
         background: #333333; }
       .top-bar-section .dropdown li:not(.has-form):not(.active):hover > a:not(.button) {
-        color: white;
+        color: orange;
         background-color: #555555;
         background: #272727; }
       .top-bar-section .dropdown li label {
@@ -3633,7 +3639,7 @@ a {
   text-decoration: none;
   line-height: inherit; }
   a:hover, a:focus {
-    color: #0078a0; }
+    color: #222222; }
   a img {
     border: none; }
 
@@ -5308,7 +5314,9 @@ table {
     background: transparent;
     color: #222222;
     font-size: 1rem;
-    font-weight: bold; }
+    font-weight: bold;
+    padding-top : 10px;
+    padding-bottom: 3px;}
   table thead {
     background: whitesmoke; }
     table thead tr th,
