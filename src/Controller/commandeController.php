@@ -69,6 +69,13 @@ class commandeController implements ControllerProviderInterface
         return $app['twig']->render('backOff/Commandes/voirDetailsCommande.html.twig',['produits'=>$produits]);
     }
 
+    public function voirCommande(Application $app,$id){
+        $this->panier = new PanierModel($app);
+        $produits = $this->panier->getCommandeByCID($id);
+
+        return $app['twig']->render('backOff/Commandes/voirDetailsCommande.html.twig',['produits'=>$produits]);
+    }
+
     public function connect(Application $app)
     {
         $index = $app['controllers_factory'];
