@@ -6,7 +6,7 @@
 
 	<h1 align="center" style="color: red"> Projet 2 web : site de vente Espace client </h1>
 
-	<div class="row">
+	{#<div class="row">
 		<div class="small-7 large-7 columns">
 			<table>
 				<caption>Produits disponibles</caption>
@@ -57,6 +57,86 @@
 			{% endif %}
 		</div>
 
+	</div>#}
+
+	<form method="post" action="{{ path('Panier.index')}}">
+		<div class="row">
+			<fieldset>
+				<legend>Rechercher un produit via son type</legend>
+				<label>Type du produit
+					<select name="typeProduit_id">
+						<option value="0">Tous les produits</option>
+                        {% for typeProduit in typeProduits %}
+							<option value="{{ typeProduit.id }}"
+                                    {% if donnees.typeProduit_id is defined and typeProduit.id == donnees.typeProduit_id %}selected{% endif %}>
+                                {{ typeProduit.libelle }}
+							</option>
+                        {% endfor %}
+					</select>
+				</label>
+				<input type="hidden" id="_method" name="_method" value="put" />
+				<input type="submit" name="researchProduit" value="Rechercher" />
+			</fieldset>
+		</div>
+	</form>
+
+
+	<div class="row">
+        {% if donneesProduit is defined and donneesProduit is not empty %}
+			<table align="center">
+				<caption>Détails du produit</caption>
+				<thead>
+				<tr>
+					<th>ID du produit</th><th>Type du produit</th><th>Nom du produit</th><th>Photo du produit</th><th>Disponibilité du produit</th><th>Produit(s) en stock</th>
+				</tr>
+				</thead>
+				<tbody>
+                {% for produit in donneesProduit %}
+					<tr>
+						<td>{{produit.id}}</td><td>{{produit.typeProduit_id}}</td><td>{{produit.nom}}</td>
+						<td>{{ produit.photo }}</td><td>{{ produit.dispo }}</td> <td>{{ produit.stock }}</td>
+						<td>
+							<a href="{{ path('Panier.add', {id: produit.id}) }}">Ajouter au panier</a>
+						</td>
+						<td>
+							<a href="{{ path('Panier.details', {id: produit.id}) }}">Details </a>
+						</td>
+					</tr>
+                {% endfor %}
+				<tbody>
+			</table>
+        {% else %}
+            {% if donneesProduit is defined and donneesProduit is empty %}
+				<h1 align="center" style="color: red">Aucun produit ne correspond au nom que vous avez entré.</h1>
+            {% endif %}
+        {% endif %}
+	</div>
+
+	<div class="row">
+        {% if panier is not empty %}
+			<table align="center">
+				<caption>Panier</caption>
+				<thead>
+				<tr>
+					<th>id</th><th>quantite</th><th>prix</th><th>date d'ajout au panier</th><th>Id produit</th>
+				</tr>
+				</thead>
+				<tbody>
+                {% for produit in panier if panier is not empty %}
+					<tr>
+						<td>{{produit.id}}</td><td>{{produit.quantite}}</td><td>{{produit.prix}}</td><td>{{produit.dateAjoutPanier}}</td><td>{{ produit.produit_id }}</td>		</td>
+						<td>
+							<a href="{{ path('Panier.delete', {id: produit.id}) }}">Supprimer du panier</a>
+						</td>
+					</tr>
+                {% endfor %}
+				</tbody>
+			</table>
+			<div style="text-align: center;">Prix total : {{ prix.prixTotal }} €</div><br>
+			<div style="text-align: center;"><a href="{{ path('commande.valider') }}">Valider la commande</a></div>
+        {% else %}
+			<div style="text-align: center;">Vous n'avez pas de produit dans le panier</div>
+        {% endif %}
 	</div>
 
 {% endblock %}
