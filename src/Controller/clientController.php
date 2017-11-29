@@ -28,7 +28,18 @@ class clientController implements ControllerProviderInterface
         return $app["twig"]->render('frontOff/client/showCoordonnees.html.twig',['donnees'=>$clientModel]);
     }
 
-    public function modifierCoordonnees(Application $app,$id){
+    public function modifierCoordonnees(Application $app,$id, Request $request){
+        $nomRoute=$request->get("_route");
+        if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="client.update") {
+            return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
+        }
+
+        $this->clientModel = new clientModel($app);
+        $donnees = $this->clientModel->getCoordonneesClientById($id);
+        return $app["twig"]->render('frontOff/client/editClientCoordonnees.html.twig',['donnees'=>$donnees]);
+    }
+
+    public function modifierCoordonneesByAmin(Application $app,$id){
         $this->clientModel = new clientModel($app);
         $donnees = $this->clientModel->getCoordonneesClientById($id);
         return $app["twig"]->render('frontOff/client/editClientCoordonnees.html.twig',['donnees'=>$donnees]);
@@ -146,6 +157,7 @@ class clientController implements ControllerProviderInterface
         $index->get("/addClient", 'App\Controller\clientController::ajouterUnClient')->bind('client.addClient');
         $index->post("/addClient", 'App\Controller\clientController::validFormAjouterClient')->bind('client.validFormAddClient');
         $index->get("/update/{id}", 'App\Controller\clientController::modifierCoordonnees')->bind('client.update');
+        $index->get("/updateClientByAdmin/{id}", 'App\Controller\clientController::modifierCoordonneesByAmin')->bind('client.updateByAdmin');
         $index->put("/update/", 'App\Controller\clientController::validFormEditClient')->bind('client.validFormEditClient');
         $index->get("/deleteClient/{id}", 'App\Controller\clientController::supprimerUnClient')->bind('client.delete');
         $index->delete("/deleteClient/", 'App\Controller\clientController::validFormSupprimerClient')->bind('client.validFormDelete');

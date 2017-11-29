@@ -14,6 +14,7 @@ class PanierController implements ControllerProviderInterface{
     private $panierModel;
     private $panierQuantite;
     private $typeProduitModel;
+    private $commandesModel;
 
     public function index(Application $app){
         return $this->showPagePanierProduits($app);
@@ -100,6 +101,13 @@ class PanierController implements ControllerProviderInterface{
 
     public function showCommande(Application $app,$id){
         $user = $app['session']->get('user_id');
+        $this->commandesModel = new CommandesModel($app);
+        $verification = $this->commandesModel->getUserIDByCommande($user,$id);
+
+        if (!($app['session']->get('roles') == 'ROLE_CLIENT' && (int)$verification['user_id'] == (int)$user)){
+            return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
+        }
+
         $this->panierModel = new PanierModel($app);
         $commandeDetails = $this->panierModel->getCommandeByID($user,$id);
 
