@@ -3,6 +3,7 @@
     <form method="post" action="{{ path('client.validFormDelete') }}">
         <div class="row">
             <fieldset>
+                <input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token_delete_client') }}">
                 <legend>Confirmer la suppression du client suivant : </legend>
                 <input name="id"  type="hidden" value="{{donneesClient.id}}" />
                 <label>Nom : <h5>{{donneesClient.nom}}</h5> </label>

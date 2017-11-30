@@ -4,6 +4,7 @@
 <div class="row">
 	
 	<fieldset>
+		<input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token_delete_produit') }}">
 		<legend>Confirmer la suppression du produit suivant : (avec twig)</legend>
 		<input name="id"  type="hidden" value="{{donnees.id}}" />
 		<label>Nom : <h5>{{donnees.nom}}</h5> </label>

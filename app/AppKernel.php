@@ -55,6 +55,12 @@ Request::enableHttpMethodParameterOverride();
 //validator      => php composer.phar  require symfony/validator
 $app->register(new Silex\Provider\ValidatorServiceProvider());
 
+//Permet d'utiliser les tokens
+use Silex\Provider\CsrfServiceProvider;
+$app->register(new CsrfServiceProvider());
+use Silex\Provider\FormServiceProvider;
+$app->register(new FormServiceProvider());
+
 // Montage des controleurs sur le routeur
 include('routing.php');
 
@@ -148,6 +154,84 @@ $app->before(function (\Symfony\Component\HttpFoundation\Request $request) use (
     }
     if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="commande.valider") {
         return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
+    }
+});
+
+//MiddleWares TOKEN
+use Symfony\Component\Security\Csrf\CsrfToken;
+$app->before(function (\Symfony\Component\HttpFoundation\Request $request) use ($app) {
+
+    $nomRoute=$request->get('_route');
+    if ($nomRoute == 'user.validFormlogin'){
+        if (isset($_POST['_csrf_token'])) {
+            $token = $_POST['_csrf_token'];
+            $csrf_token = new CsrfToken('token_user_login', $token);
+            $csrf_token_ok = $app['csrf.token_manager']->isTokenValid($csrf_token);
+            if(!$csrf_token_ok)
+            {
+                return $app ->redirect($app["url_generator"]->generate("index.errorCsrf"));
+            }
+        }
+    }else if($nomRoute == 'produit.validFormAddProduit'){
+        if (isset($_POST['_csrf_token'])) {
+            $token = $_POST['_csrf_token'];
+            $csrf_token = new CsrfToken('token_add_produit', $token);
+            $csrf_token_ok = $app['csrf.token_manager']->isTokenValid($csrf_token);
+            if(!$csrf_token_ok)
+            {
+                return $app ->redirect($app["url_generator"]->generate("index.errorCsrf"));
+            }
+        }
+    }else if($nomRoute == 'produit.validFormEditProduit'){
+        if (isset($_POST['_csrf_token'])) {
+            $token = $_POST['_csrf_token'];
+            $csrf_token = new CsrfToken('token_edit_produit', $token);
+            $csrf_token_ok = $app['csrf.token_manager']->isTokenValid($csrf_token);
+            if(!$csrf_token_ok)
+            {
+                return $app ->redirect($app["url_generator"]->generate("index.errorCsrf"));
+            }
+        }
+    }else if($nomRoute == 'produit.validFormDeleteProduit'){
+        if (isset($_POST['_csrf_token'])) {
+            $token = $_POST['_csrf_token'];
+            $csrf_token = new CsrfToken('token_delete_produit', $token);
+            $csrf_token_ok = $app['csrf.token_manager']->isTokenValid($csrf_token);
+            if(!$csrf_token_ok)
+            {
+                return $app ->redirect($app["url_generator"]->generate("index.errorCsrf"));
+            }
+        }
+    }else if($nomRoute == 'client.validFormAddClient'){
+        if (isset($_POST['_csrf_token'])) {
+            $token = $_POST['_csrf_token'];
+            $csrf_token = new CsrfToken('token_add_client', $token);
+            $csrf_token_ok = $app['csrf.token_manager']->isTokenValid($csrf_token);
+            if(!$csrf_token_ok)
+            {
+                return $app ->redirect($app["url_generator"]->generate("index.errorCsrf"));
+            }
+        }
+    }else if($nomRoute == 'client.validFormDelete'){
+        if (isset($_POST['_csrf_token'])) {
+            $token = $_POST['_csrf_token'];
+            $csrf_token = new CsrfToken('token_delete_client', $token);
+            $csrf_token_ok = $app['csrf.token_manager']->isTokenValid($csrf_token);
+            if(!$csrf_token_ok)
+            {
+                return $app ->redirect($app["url_generator"]->generate("index.errorCsrf"));
+            }
+        }
+    }else if($nomRoute == 'client.validFormEditClient'){
+        if (isset($_POST['_csrf_token'])) {
+            $token = $_POST['_csrf_token'];
+            $csrf_token = new CsrfToken('token_update_client', $token);
+            $csrf_token_ok = $app['csrf.token_manager']->isTokenValid($csrf_token);
+            if(!$csrf_token_ok)
+            {
+                return $app ->redirect($app["url_generator"]->generate("index.errorCsrf"));
+            }
+        }
     }
 });
 
