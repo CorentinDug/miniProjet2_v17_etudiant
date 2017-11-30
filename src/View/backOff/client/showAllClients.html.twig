@@ -17,7 +17,7 @@
                     <tr>
                         <td>{{client.id}}</td><td>{{client.username}}</td><td>{{client.nom}}</td>
                         <td>{{ client.email }}</td><td>{{ client.adresse }}</td><td>{{ client.ville }}</td><td>{{ client.code_postal }}</td>
-                        <td><a href="{{ path('client.update',{id: client.id}) }}">Modifier</a></td>
+                        <td><a href="{{ path('client.updateByAdmin',{id: client.id}) }}">Modifier</a></td>
                         <td><a href="{{ path('client.delete',{id: client.id}) }}">Supprimer</a></td>
                     </tr>
                 {% endfor %}

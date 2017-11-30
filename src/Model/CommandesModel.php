@@ -88,6 +88,16 @@ class CommandesModel
         return $queryBuilder->execute()->fetch();
     }
 
+    public function getUserIDByCommande($user,$idCommande){
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('user_id')
+            ->from('commandes')
+            ->where('user_id = '.$user.' and id = '.$idCommande);
+
+        return $queryBuilder->execute()->fetch();
+    }
+
     public function getAllCommandes()
     {
         $queryBuilder = new QueryBuilder($this->db);

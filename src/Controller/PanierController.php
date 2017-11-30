@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Model\CommandesModel;
 use App\Model\PanierModel;
 use App\Model\ProduitModel;
+use App\Model\TypeProduitModel;
 use Silex\Api\ControllerProviderInterface;
 use Silex\Application;
 
@@ -12,6 +13,8 @@ class PanierController implements ControllerProviderInterface{
     private $produitModel;
     private $panierModel;
     private $panierQuantite;
+    private $typeProduitModel;
+    private $commandesModel;
 
     public function index(Application $app){
         return $this->showPagePanierProduits($app);
@@ -19,7 +22,7 @@ class PanierController implements ControllerProviderInterface{
 
     public function showPagePanierProduits(Application $app){
         $this->produitModel = new ProduitModel($app);
-        $produitModel = $this->produitModel->getAllProduits();
+        $donneeProduit = $this->produitModel->getAllProduits();
 
         $user = $app['session']->get('user_id');
         $this->panierModel = new PanierModel($app);
@@ -27,7 +30,27 @@ class PanierController implements ControllerProviderInterface{
 
         $prixTotal = $this->panierModel->getPrixByPanier($user);
 
-        return $app["twig"]->render('frontOff/frontOFFICE.html.twig',['produits'=>$produitModel,'panier'=>$panierModel,'prix'=>$prixTotal]);
+        $this->typeProduitModel = new TypeProduitModel($app);
+        $typeProduit = $this->typeProduitModel->getAllTypeProduits();
+        if (isset($_POST['typeProduit_id'])){
+            $donnee = [
+                'typeProduit_id' =>htmlspecialchars($_POST['typeProduit_id'])
+            ];
+        }else{
+            return $app['twig']->render('frontOff/frontOFFICE.html.twig',['donneesProduit'=>$donneeProduit,'typeProduits'=> $typeProduit,'prix'=>$prixTotal,'panier'=>$panierModel]);
+        }
+
+        if ($donnee['typeProduit_id'] == 0){
+            $this->produitModel = new ProduitModel($app);
+            $donneeProduit = $this->produitModel->getAllProduits();
+            return $app['twig']->render('frontOff/frontOFFICE.html.twig',['donnees'=>$donnee,'donneesProduit' => $donneeProduit,'typeProduits'=> $typeProduit,'prix'=>$prixTotal,'panier'=>$panierModel]);
+        }else {
+            $this->produitModel = new ProduitModel($app);
+            $donneeProduit = $this->produitModel->getProduitByProduitID($donnee['typeProduit_id']);
+            return $app['twig']->render('frontOff/frontOFFICE.html.twig',['donnees'=>$donnee,'donneesProduit' => $donneeProduit,'typeProduits'=> $typeProduit,'prix'=>$prixTotal,'panier'=>$panierModel]);
+        }
+
+        //return $app["twig"]->render('frontOff/frontOFFICE.html.twig',['produits'=>$produitModel,'panier'=>$panierModel,'prix'=>$prixTotal]);
     }
 
     public function addPanier(Application $app,$id){
@@ -78,6 +101,13 @@ class PanierController implements ControllerProviderInterface{
 
     public function showCommande(Application $app,$id){
         $user = $app['session']->get('user_id');
+        $this->commandesModel = new CommandesModel($app);
+        $verification = $this->commandesModel->getUserIDByCommande($user,$id);
+
+        if (!($app['session']->get('roles') == 'ROLE_CLIENT' && (int)$verification['user_id'] == (int)$user)){
+            return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
+        }
+
         $this->panierModel = new PanierModel($app);
         $commandeDetails = $this->panierModel->getCommandeByID($user,$id);
 

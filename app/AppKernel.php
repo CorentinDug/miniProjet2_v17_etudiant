@@ -85,7 +85,7 @@ $app->before(function (\Symfony\Component\HttpFoundation\Request $request) use (
     if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="client.validFormAddClient") {
         return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
     }
-    if (($app['session']->get('roles') != 'ROLE_ADMIN' && $app['session']->get('roles') != 'ROLE_CLIENT')  && $nomRoute=="client.update") {
+    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="client.updateByAdmin") {
         return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
     }
     if (($app['session']->get('roles') != 'ROLE_ADMIN' && $app['session']->get('roles') != 'ROLE_CLIENT')  && $nomRoute=="client.validFormEditClient") {
@@ -143,16 +143,10 @@ $app->before(function (\Symfony\Component\HttpFoundation\Request $request) use (
     if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="produitClient.find") {
         return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
     }
-    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="produitClient.show") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
     if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="commande.index") {
         return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
     }
     if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="commande.valider") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="commande.voirCommande") {
         return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
     }
 });
