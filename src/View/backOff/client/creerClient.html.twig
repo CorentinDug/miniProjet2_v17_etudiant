@@ -1,5 +1,6 @@
 {% extends "layout.html.twig" %}
 {% block contenu %}
+
     <form method="post" action="{{ path('client.validFormAddClient') }}">
         <div class="row">
             <fieldset>
@@ -47,7 +48,14 @@
                         <small class="error">{{erreurs.adresse}}</small>
                     {% endif %}
                 </label>
+
+                <img src="{{ image }}" name="image" value="" /><br>
+
+                saisir captcha : <input type="text" name="maPhrase">
                 <input type="submit" name="ajouterClient" value="Ajouter un client" />
+                {% if erreurs.phrase is defined %}
+                    <small class="error">{{erreurs.phrase}}</small>
+                {% endif %}
             </fieldset>
         </div>
     </form>

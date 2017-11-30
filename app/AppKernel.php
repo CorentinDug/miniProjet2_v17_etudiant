@@ -85,10 +85,10 @@ $app->before(function (\Symfony\Component\HttpFoundation\Request $request) use (
     if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="client.showAll") {
         return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
     }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="client.addClient") {
+    if ($app['session']->get('roles') == 'ROLE_CLIENT'  && $nomRoute=="client.addClient") {
         return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
     }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="client.validFormAddClient") {
+    if ($app['session']->get('roles') == 'ROLE_CLIENT'  && $nomRoute=="client.validFormAddClient") {
         return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
     }
     if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="client.updateByAdmin") {

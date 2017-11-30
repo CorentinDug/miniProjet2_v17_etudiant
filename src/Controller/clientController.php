@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;   // pour utiliser request
 
 use App\Model\clientModel;
 
+use Gregwar\Captcha\CaptchaBuilder;
+
 use Symfony\Component\HttpKernel\Client;
 use Symfony\Component\Security;
 class clientController implements ControllerProviderInterface
@@ -94,11 +96,15 @@ class clientController implements ControllerProviderInterface
     }
 
     public function ajouterUnClient(Application $app){
-        return $app["twig"]->render('backOff/client/creerClient.html.twig');
+        $builder = new CaptchaBuilder();
+        $builder->build();
+        $_SESSION['phrase'] = $builder -> getPhrase();
+        $phrase = $_SESSION['phrase'];
+        return $app["twig"]->render('backOff/client/creerClient.html.twig', ['phrase' => $phrase, 'image' => $builder -> inline()]);
     }
 
     public function validFormAjouterClient(Application $app,Request $req){
-        if (isset($_POST['username']) && isset($_POST['motdepasse']) and isset($_POST['email']) and isset($_POST['nom']) and isset($_POST['code_postal']) and isset($_POST['ville']) and isset($_POST['adresse'])) {
+        if (isset($_POST['username']) && isset($_POST['motdepasse']) and isset($_POST['email']) and isset($_POST['nom']) and isset($_POST['code_postal']) and isset($_POST['ville']) and isset($_POST['adresse']) and isset($_POST['maPhrase'])) {
             $donnees = [
                 'username' => htmlspecialchars($req->get('username')),
                 'motdepasse' => htmlspecialchars($req->get('motdepasse')),
@@ -107,6 +113,8 @@ class clientController implements ControllerProviderInterface
                 'code_postal' => htmlspecialchars($req->get('code_postal')),
                 'ville' => htmlspecialchars($req->get('ville')),
                 'adresse' => htmlspecialchars($req->get('adresse')),
+                'maPhrase'=> htmlspecialchars($req->get('maPhrase')),
+                'image'=> htmlspecialchars($req->get('image')),
             ];
 
             if ((! preg_match("/^[A-Za-z ]{2,}/",$donnees['nom']))) $erreurs['nom']='Le nom doit être composé de 2 lettres minimum';
@@ -117,10 +125,15 @@ class clientController implements ControllerProviderInterface
             if ((! preg_match("/^[A-Za-z ]{2,}/",$donnees['adresse']))) $erreurs['adresse']="L'adresse doit être composé de 2 lettres minimum";
             if ((! preg_match("/^[A-Za-z ]{2,}/",$donnees['ville']))) $erreurs['ville']='La ville doit être composé de 2 lettres minimum';
             if(! is_numeric($donnees['code_postal']))$erreurs['code_postal']='Saisir une valeur numérique';
+            if($donnees['maPhrase'] != $_SESSION['phrase']) $erreurs['phrase']='Le captcha est incorrect';
 
             if(! empty($erreurs))
             {
-                return $app["twig"]->render('backOff/client/creerClient.html.twig',['donnees'=>$donnees,'erreurs'=>$erreurs]);
+                $builder = new CaptchaBuilder();
+                $builder->build();
+                $_SESSION['phrase'] = $builder -> getPhrase();
+                $phrase = $_SESSION['phrase'];
+                return $app["twig"]->render('backOff/client/creerClient.html.twig',['donnees'=>$donnees,'erreurs'=>$erreurs,'image' => $builder->inline(), 'phrase' => $phrase]);
             }
             else
             {
