@@ -1,11 +1,12 @@
-
 {% extends "layout.html.twig" %}
 {% block contenu %}
     <form method="post" action="{{ path('user.validFormlogin') }}">
 
+
         <div class="row">
 
             <fieldset>
+                <input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token_user_login') }}">
                 <legend>Se connecter</legend>
                 <label>Login :
                     <input name="login"  type="text"  size="18" value="" />
