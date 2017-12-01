@@ -139,7 +139,11 @@ class clientController implements ControllerProviderInterface
             {
                 $this->clientModel = new clientModel($app);
                 $this->clientModel->addClient($donnees);
-                return $app->redirect($app["url_generator"]->generate("client.showAll"));
+                if ($app['session']->get('roles') != 'ROLE_ADMIN'){
+                    return $app->redirect($app["url_generator"]->generate('index.index'));
+                }else{
+                    return $app->redirect($app["url_generator"]->generate("client.showAll"));
+                }
             }
 
         }

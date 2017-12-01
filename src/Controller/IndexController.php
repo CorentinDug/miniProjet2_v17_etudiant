@@ -35,6 +35,7 @@ class IndexController implements ControllerProviderInterface
         $index = $app['controllers_factory'];
         $index->match("/", 'App\Controller\IndexController::index')->bind('accueil');
         $index->match("/pageAdmin", 'App\Controller\IndexController::showPageAdmin')->bind("index.pageAdmin");
+        $index->match("/index", 'App\Controller\IndexController::index')->bind("index.index");
         $index->match("/pageError", 'App\Controller\IndexController::erreurDroit')->bind("index.erreurDroit");
         $index->match("/pageErrorToken", 'App\Controller\IndexController::erreurCrsf')->bind("index.errorCsrf");
         return $index;
