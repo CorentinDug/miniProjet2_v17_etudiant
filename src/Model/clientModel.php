@@ -66,7 +66,8 @@ class clientModel
                 'code_postal'=>'?',
                 'ville'=>'?',
                 'adresse'=>'?',
-                'motdepasse'=>'?'
+                'motdepasse'=>'?',
+                'password'=>'?'
             ])
 
             ->where('id= ?')
@@ -76,7 +77,8 @@ class clientModel
             ->setParameter(3, $donnees['code_postal'])
             ->setParameter(4, $donnees['ville'])
             ->setParameter(5, $donnees['adresse'])
-            ->setParameter(6, $donnees['motdepasse']);
+            ->setParameter(6, $donnees['motdepasse'])
+            ->setParameter(7, $donnees['password']);
         return $queryBuilder->execute();
     }
 

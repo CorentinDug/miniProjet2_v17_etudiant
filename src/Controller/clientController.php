@@ -137,6 +137,9 @@ class clientController implements ControllerProviderInterface
             }
             else
             {
+                $grainDeSel = "gsjkstzzeadsfùzrafsdf!sq!fezlkfes";
+                $hash = md5($donnees['motdepasse'].$grainDeSel);
+                $donnees['password'] = $hash;
                 $this->clientModel = new clientModel($app);
                 $this->clientModel->addClient($donnees);
                 if ($app['session']->get('roles') != 'ROLE_ADMIN'){
