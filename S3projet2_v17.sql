@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS etats (
 -- Contenu de la table etats
 INSERT INTO etats (id, libelle) VALUES
 (1, 'A préparer'),
-(2, 'Expédié');
+(2, 'Expédié'),
 (3, 'Livré');
 
 -- --------------------------------------------------------
