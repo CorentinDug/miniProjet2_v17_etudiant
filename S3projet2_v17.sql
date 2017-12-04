@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS typeProduits (
 )  DEFAULT CHARSET=utf8;
 -- Contenu de la table typeproduits
 INSERT INTO typeProduits (id, libelle) VALUES
-(1, 'type 1'),
-(2, 'type 2'),
-(3, 'type 3');
+(1, 'Sportive Classique'),
+(2, 'Muscle Car'),
+(3, 'Sportive');
 
 -- --------------------------------------------------------
 -- Structure de la table etats
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS produits (
   id int(10) NOT NULL AUTO_INCREMENT,
   typeProduit_id int(10) DEFAULT NULL,
   nom varchar(50) DEFAULT NULL,
-  prix float(6,2) DEFAULT NULL,
+  prix float(15,2) DEFAULT NULL,
   photo varchar(50) DEFAULT NULL,
   dispo tinyint(4) NOT NULL,
   stock int(11) NOT NULL,
@@ -44,12 +44,18 @@ CREATE TABLE IF NOT EXISTS produits (
 ) DEFAULT CHARSET=utf8 ;
 
 INSERT INTO produits (id,typeProduit_id,nom,prix,photo,dispo,stock) VALUES
-(1,1, 'produit 1','100','imageProduit.jpeg',1,5),
-(2,1, 'produit 2','5.5','imageProduit.jpeg',1,4),
-(3,2, 'produit 3','8.5','imageProduit.jpeg',1,10),
-(4,2, 'produit 4','8','imageProduit.jpeg',1,5),
-(5,2, 'produit 5','55','imageProduit.jpeg',1,4),
-(6,3, 'produit 6','5','imageProduit.jpeg',1,10);
+(1,3, 'Ferrari 458 Speciale','100000','458speciale.jpeg',1,5),
+(2,3, 'McLaren 720S','200000','720s.jpeg',1,4),
+(3,1, 'Porsche 911 Turbo','50000','911.jpeg',1,4),
+(4,2, 'Chevrolet Camaro SS','35000','camaro.jpeg',1,5),
+(5,2, 'Dodge Charger','20000','charger.jpeg',1,4),
+(6,3, 'Aston Martin DB11','250000','db11.jpeg',1,10),
+(7,1, 'Ferrari F40','1000000','f40.jpeg',1,2),
+(8,3, 'Jaguar F-Type SVR','190000','fTypeSVR.jpeg',1,6),
+(9,3, 'Lamborghini Murcielago','350000','murcielago.jpeg',1,3),
+(10,1, 'Ford Mustang','65000','mustang.jpeg',1,4),
+(11,3, 'Audi R8 V10','75000','r8v10.jpeg',1,3),
+(12,1, 'Ferrari TestaRossa','115000','testaRossa.jpeg',1,7);
 
 
 -- --------------------------------------------------------
