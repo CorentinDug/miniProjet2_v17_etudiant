@@ -155,6 +155,9 @@ $app->before(function (\Symfony\Component\HttpFoundation\Request $request) use (
     if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="commande.valider") {
         return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
     }
+    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="client.update") {
+        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
+    }
 });
 
 //MiddleWares TOKEN
