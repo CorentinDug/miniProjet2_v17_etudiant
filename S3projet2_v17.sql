@@ -53,7 +53,7 @@ INSERT INTO produits (id,typeProduit_id,nom,prix,photo,dispo,stock) VALUES
 (7,1, 'Ferrari F40','1000000','f40.jpeg',1,2),
 (8,3, 'Jaguar F-Type SVR','190000','fTypeSVR.jpeg',1,6),
 (9,3, 'Lamborghini Murcielago','350000','murcielago.jpeg',1,3),
-(10,1, 'Ford Mustang','65000','mustang.jpeg',1,4),
+(10,2, 'Ford Mustang','65000','mustang.jpeg',1,4),
 (11,3, 'Audi R8 V10','75000','r8v10.jpeg',1,3),
 (12,1, 'Ferrari TestaRossa','115000','testaRossa.jpeg',1,7);
 
@@ -105,7 +105,7 @@ INSERT INTO users (id,username,password,motdepasse,email,roles) VALUES
 CREATE TABLE IF NOT EXISTS commandes (
   id int(11) NOT NULL AUTO_INCREMENT,
   user_id int(11)  UNSIGNED  NOT NULL,
-  prix float(6,2) NOT NULL,
+  prix float(20,2) NOT NULL,
   date_achat  timestamp default CURRENT_TIMESTAMP,
   etat_id int(11) NOT NULL,
   PRIMARY KEY (id),
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS commandes (
 CREATE TABLE IF NOT EXISTS paniers (
   id int(11) NOT NULL AUTO_INCREMENT,
   quantite int(11) NOT NULL,
-  prix float(6,2) NOT NULL,
+  prix float(20,2) NOT NULL,
   dateAjoutPanier timestamp default CURRENT_TIMESTAMP,
   user_id int(11)  UNSIGNED  NOT NULL,
   produit_id int(11) NOT NULL,
