@@ -104,6 +104,7 @@ class clientController implements ControllerProviderInterface
     }
 
     public function validFormAjouterClient(Application $app,Request $req){
+        $this->clientModel = new clientModel($app);
         if (isset($_POST['username']) && isset($_POST['motdepasse']) and isset($_POST['email']) and isset($_POST['nom']) and isset($_POST['code_postal']) and isset($_POST['ville']) and isset($_POST['adresse']) and isset($_POST['maPhrase'])) {
             $donnees = [
                 'username' => htmlspecialchars($req->get('username')),
@@ -117,9 +118,17 @@ class clientController implements ControllerProviderInterface
                 'image'=> htmlspecialchars($req->get('image')),
             ];
 
+            $data = $this->clientModel->getAllClient();
+
             if ((! preg_match("/^[A-Za-z ]{2,}/",$donnees['nom']))) $erreurs['nom']='Le nom doit être composé de 2 lettres minimum';
             if (strlen($donnees['motdepasse']) < 4) $erreurs['motdepasse']='le mot de passe doit contenir quatre caracteres minimum';
             if (strlen($donnees['username']) < 4) $erreurs['username']='Le pseudo doit être composé de 4 caracteres minimum';
+            foreach ($data as $value){
+                if($donnees['username'] == $value['username']){
+                    $erreurs['username']='Cette username est déjà utilisé, veuillez en prendre un autre';
+                    break;
+                }
+            }
             if (!(preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $donnees['email']))) $erreurs['email']='E-Mail : xCaracteres@yCaracteres.zCaracteres';
             if ((! preg_match("/^[0-9]{5}/",$donnees['code_postal']))) $erreurs['code_postal']='Le code postal doit être composé de 5 chiffres';
             if ((! preg_match("/^[A-Za-z ]{2,}/",$donnees['adresse']))) $erreurs['adresse']="L'adresse doit être composé de 2 lettres minimum";
