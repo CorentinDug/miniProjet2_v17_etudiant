@@ -37,7 +37,9 @@
                 {% for produit in donneesProduit %}
                     <tr>
                         <td>{{produit.id}}</td><td>{{produit.typeProduit_id}}</td><td>{{produit.nom}}</td>
-                        <td>{{ produit.photo }}</td><td>{{ produit.dispo }}</td> <td>{{ produit.stock }}</td>
+                        <td>
+                            <img style="width:100px;height:70px" src="{{asset('images/')}}{{produit.photo}}" alt="image de {{produit.nom}}" >
+                        </td><td>{{ produit.dispo }}</td> <td>{{ produit.stock }}</td>
                     </tr>
                 {% endfor %}
                 <tbody>

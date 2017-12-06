@@ -1,0 +1,19 @@
+{% extends "layout.html.twig" %}
+{% block contenu %}
+    <div class="row">
+        <table align="center">
+            <caption>Commentaires sur le produit</caption>
+            <thead>
+            <tr><th>ID du commentaire</th><th>Commentaire</th><th>Username du client</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for com in commentaires if commentaires is not empty %}
+                <tr>
+                    <td>{{com.id}}</td><td>{{com.commentaire}}</td><td>{{donneesClient.username}}</td>
+                </tr>
+            {% endfor %}
+            <tbody>
+        </table>
+    </div>
+{% endblock %}

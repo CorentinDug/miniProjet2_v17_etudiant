@@ -1,4 +1,4 @@
-DROP TABLE  IF EXISTS paniers,commandes, produits, users, typeProduits, etats;
+DROP TABLE  IF EXISTS paniers,commentaires,commandes, produits, users, typeProduits, etats;
 
 -- --------------------------------------------------------
 -- Structure de la table typeproduits
@@ -131,3 +131,14 @@ CREATE TABLE IF NOT EXISTS paniers (
   CONSTRAINT fk_paniers_commandes FOREIGN KEY (commande_id) REFERENCES commandes (id)
 ) DEFAULT CHARSET=utf8 ;
 
+-- ----------------------------------------------------------
+-- Structure de la table commentaires
+CREATE TABLE IF NOT EXISTS commentaires(
+  id int(11) NOT NULL AUTO_INCREMENT,
+  commentaire varchar(1000) NOT NULL,
+  produit_id int(11) NOT NULL,
+  user_id int(11) NOT NULL,
+  PRIMARY KEY(id),
+  CONSTRAINT fk_commentaires_produits FOREIGN KEY (produit_id) REFERENCES produits (id),
+  CONSTRAINT fk_commentaires_users FOREIGN KEY (user_id) REFERENCES users (id)
+)DEFAULT CHARSET=utf8;

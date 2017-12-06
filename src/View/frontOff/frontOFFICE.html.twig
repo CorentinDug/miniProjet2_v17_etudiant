@@ -41,7 +41,7 @@
                 {% for produit in donneesProduit %}
 					<tr>
 						<td>{{produit.id}}</td><td>{{produit.nom}}</td><td>
-							<img style="width:40px;height:40px" src="{{asset('images/')}}{{produit.photo}}" alt="image de {{produit.nom}}" >
+							<img style="width:100px;height:70px" src="{{asset('images/')}}{{produit.photo}}" alt="image de {{produit.nom}}" >
 						</td><td>{{ produit.prix }} €</td><td>{{ produit.stock }}</td>
 						<td>
 							<a href="{{ path('Panier.add', {id: produit.id}) }}">Ajouter au panier</a>
