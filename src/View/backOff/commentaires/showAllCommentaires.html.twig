@@ -1,0 +1,24 @@
+{% extends "layout.html.twig" %}
+{% block contenu %}
+    <div class="row">
+        {% if commentaires is defined and commentaires is not empty %}
+            <table align="center">
+                <caption>Commentaires sur le produit</caption>
+                <thead>
+                <tr><th>ID du commentaire</th><th>Commentaire</th><th>Username du client</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for com in commentaires if commentaires is not empty %}
+                    <tr>
+                        <td>{{com.id}}</td><td>{{com.commentaire}}</td><td>{{com.username}}</td>
+                        <td><a href="{{ path('commentaires.delete',{id: com.id}) }}">Supprimer le commentaire</a></td>
+                    </tr>
+                {% endfor %}
+                <tbody>
+            </table>
+        {% else %}
+            <h1 align="center" style="color: red">Aucuns commentaires pour cette voiture</h1>
+        {% endif %}
+    </div>
+{% endblock %}

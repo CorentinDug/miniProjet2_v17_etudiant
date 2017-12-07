@@ -24,13 +24,14 @@
 					</td>
 					{% if   app.session.get('roles') is defined and  app.session.get('roles') == 'ROLE_ADMIN' %}
 						<td>
-							<a href="{{ path('produit.editProduit', {id: produit.id}) }}">modifier</a>
-							<a href="{{ path('produit.deleteProduit', {id: produit.id}) }}">supprimer</a>
+							<a href="{{ path('produit.editProduit', {id: produit.id}) }}">Modifier</a>
+							<a href="{{ path('produit.deleteProduit', {id: produit.id}) }}">Supprimer</a>
+							<a href="{{ path('commentaire.showCommentaire', {id: produit.id}) }}">Voir tous les commentaires</a>
 						</td>
 					{% endif %}
 					{% if app.session.get('roles') is defined and app.session.get('roles') == "ROLE_CLIENT" %}
 						<td>
-							{#<a href="{{ path('commentaire.add',{id:produit.id}) }}">Ajouter un commentaire</a>#}
+							<a href="{{ path('commentaire.add',{id:produit.id}) }}">Ajouter un commentaire</a>
 							<a href="{{ path('commentaire.showCommentairesClient',{id:produit.id}) }}">Voir tous les commentaires</a>
 						</td>
 					{% endif %}

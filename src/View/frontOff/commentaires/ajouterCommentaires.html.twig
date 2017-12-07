@@ -1,0 +1,20 @@
+{% extends "layout.html.twig" %}
+{% block contenu %}
+
+    <form method="post" action="{{ path('commentaires.validFormAddCommentaire') }}">
+        <div class="row">
+            <fieldset>
+                <input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token_add_commentaires') }}">
+                <input type="hidden"   name="id"   value="{{ id }}">
+                <legend>Ajouter un comentaire</legend>
+                <label>Commentaire :
+                    <input name="commentaire"  type="text"  size="18" value="{{donnees.commentaire|default('')}}" />
+                    {% if erreurs.commentaire is defined %}
+                        <small class="error">{{erreurs.commentaire}}</small>
+                    {% endif %}
+                </label>
+                <input type="submit" name="ajouterCommentaires" value="Ajouter le commentaire" />
+            </fieldset>
+        </div>
+    </form>
+{% endblock %}

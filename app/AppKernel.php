@@ -125,6 +125,15 @@ $app->before(function (\Symfony\Component\HttpFoundation\Request $request) use (
     if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="produit.validFormEditProduit") {
         return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
     }
+    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="commentaire.showCommentaire") {
+        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
+    }
+    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="commentaires.delete") {
+        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
+    }
+    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="commentaires.validFormDeleteCommentaire") {
+        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
+    }
 });
 
 //MiddleWare route pour le cote CLIENT
@@ -156,6 +165,15 @@ $app->before(function (\Symfony\Component\HttpFoundation\Request $request) use (
         return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
     }
     if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="client.update") {
+        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
+    }
+    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="commentaire.add") {
+        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
+    }
+    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="commentaires.validFormAddCommentaire") {
+        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
+    }
+    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="commentaire.showCommentairesClient") {
         return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
     }
 });
@@ -229,6 +247,26 @@ $app->before(function (\Symfony\Component\HttpFoundation\Request $request) use (
         if (isset($_POST['_csrf_token'])) {
             $token = $_POST['_csrf_token'];
             $csrf_token = new CsrfToken('token_update_client', $token);
+            $csrf_token_ok = $app['csrf.token_manager']->isTokenValid($csrf_token);
+            if(!$csrf_token_ok)
+            {
+                return $app ->redirect($app["url_generator"]->generate("index.errorCsrf"));
+            }
+        }
+    }else if($nomRoute == 'commentaires.validFormAddCommentaire'){
+        if (isset($_POST['_csrf_token'])) {
+            $token = $_POST['_csrf_token'];
+            $csrf_token = new CsrfToken('token_add_commentaires', $token);
+            $csrf_token_ok = $app['csrf.token_manager']->isTokenValid($csrf_token);
+            if(!$csrf_token_ok)
+            {
+                return $app ->redirect($app["url_generator"]->generate("index.errorCsrf"));
+            }
+        }
+    }else if($nomRoute == 'commentaires.validFormDeleteCommentaire'){
+        if (isset($_POST['_csrf_token'])) {
+            $token = $_POST['_csrf_token'];
+            $csrf_token = new CsrfToken('token_delete_commentaires', $token);
             $csrf_token_ok = $app['csrf.token_manager']->isTokenValid($csrf_token);
             if(!$csrf_token_ok)
             {
