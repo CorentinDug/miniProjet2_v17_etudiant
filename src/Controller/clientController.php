@@ -31,6 +31,11 @@ class clientController implements ControllerProviderInterface
     }
 
     public function modifierCoordonnees(Application $app,$id, Request $request){
+        $user = $app['session']->get('user_id');
+        if (!($app['session']->get('roles') == 'ROLE_CLIENT' && $id == (int)$user)){
+            return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
+        }
+
         $this->clientModel = new clientModel($app);
         $donnees = $this->clientModel->getCoordonneesClientById($id);
         return $app["twig"]->render('frontOff/client/editClientCoordonnees.html.twig',['donnees'=>$donnees]);

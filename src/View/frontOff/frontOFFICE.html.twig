@@ -48,7 +48,7 @@
 							{% if produit.stock > 0 %}
 								<a href="{{ path('Panier.add', {id: produit.id}) }}">Ajouter au panier</a>
 							{% else %}
-								Epuisé
+								<h5 style="color: red;">Epuisé</h5>
 							{% endif %}
 						</td>
 						<td>

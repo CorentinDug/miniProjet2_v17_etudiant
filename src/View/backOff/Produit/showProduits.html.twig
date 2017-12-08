@@ -8,7 +8,7 @@
 		<table align="center">
 			<caption>Recapitulatifs des voitures</caption>
 			<thead>
-			<tr><th>Nom</th><th>ID</th><th>Type</th><th>Prix</th><th>Photo</th>
+			<tr><th>Nom</th><th>ID</th><th>Type</th><th>Prix</th><th>Photo</th><th>Stock</th>
 				{% if   app.session.get('droit') is defined and  app.session.get('droit') == 'DROITadmin' %}
 					<th>opération</th>
 				{% endif %}
@@ -22,6 +22,7 @@
 					<td>
 						<img style="width:100px;height:70px" src="{{asset('images/')}}{{produit.photo}}" alt="image de {{produit.libelle}}" >
 					</td>
+					<td>{{ produit.stock }}</td>
 					{% if   app.session.get('roles') is defined and  app.session.get('roles') == 'ROLE_ADMIN' %}
 						<td>
 							<a href="{{ path('produit.editProduit', {id: produit.id}) }}">Modifier la voiture | </a>
@@ -29,9 +30,12 @@
 							<a href="{{ path('commentaire.showCommentaire', {id: produit.id}) }}">Voir tous les commentaires</a>
 						</td>
 					{% endif %}
+					{% if produit.stock <= 1 and app.session.get('roles') is defined and  app.session.get('roles') == 'ROLE_ADMIN' %}
+						<td><h5 style="color: red;">Prévoir réapprovisionnement</h5></td>
+					{% endif %}
 					{% if app.session.get('roles') is defined and app.session.get('roles') == "ROLE_CLIENT" %}
 						<td>
-							<a href="{{ path('commentaire.add',{id:produit.id}) }}">Ajouter un commentaire</a>
+							<a href="{{ path('commentaire.add',{id:produit.id}) }}">Ajouter un commentaire | </a>
 							<a href="{{ path('commentaire.showCommentairesClient',{id:produit.id}) }}">Voir tous les commentaires</a>
 						</td>
 					{% endif %}
