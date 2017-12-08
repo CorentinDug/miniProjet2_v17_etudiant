@@ -1982,7 +1982,7 @@ meta.foundation-mq-topbar {
           color: white; }
     .top-bar-section ul li:hover:not(.has-form) > a {
       background-color: #555555;
-      background: #272727;
+      background: black;
       color: orange; }
     .top-bar-section ul li.active > a {
       background: #008cba;
@@ -2115,7 +2115,7 @@ meta.foundation-mq-topbar {
       background: orange; }
       .top-bar-section li:not(.has-form) a:not(.button):hover {
         background-color: #555555;
-        background: #272727; }
+        background: black; }
     .top-bar-section li.active:not(.has-form) a:not(.button) {
       padding: 0 15px;
       line-height: 45px;
@@ -2181,11 +2181,11 @@ meta.foundation-mq-topbar {
         background: #333333; }
       .top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button) {
         color: white;
-        background: #333333; }
+        background: black; }
       .top-bar-section .dropdown li:not(.has-form):not(.active):hover > a:not(.button) {
         color: orange;
         background-color: #555555;
-        background: #272727; }
+        background: black; }
       .top-bar-section .dropdown li label {
         white-space: nowrap;
         background: #333333; }
