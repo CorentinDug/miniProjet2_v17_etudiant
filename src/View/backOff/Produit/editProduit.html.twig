@@ -4,7 +4,7 @@
 		<div class="row">
 			<fieldset>
 				<input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token_edit_produit') }}">
-				<legend>Modifier un produit  (avec twig)</legend>
+				<legend>Modifier une voiture </legend>
 				<input name="id"  type="hidden" value="{{donnees.id}}" />
 				<label>Nom :
 					<input name="nom"  type="text"  size="18" value="{{donnees.nom}}" />
@@ -43,7 +43,7 @@
 
 				<input type="hidden" id="_method" name="_method" value="put" />
 
-				<input type="submit" name="modifierProduit" value="Modifier" />
+				<input type="submit" name="modifierProduit" value="Modifier la voiture" />
 			</fieldset>
 		</div>
 	</form>

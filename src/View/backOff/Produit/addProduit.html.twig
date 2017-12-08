@@ -4,7 +4,7 @@
     <div class="row">
         <fieldset>
             <input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token_add_produit') }}">
-            <legend>Creer un produit (twig)</legend>
+            <legend>Ajouter une voiture</legend>
             <label>Nom :
                 <input name="nom"  type="text"  size="18" value="{{donnees.nom|default('')}}" />
                 {% if erreurs.nom is defined %}
@@ -39,7 +39,7 @@
                     <small class="error">{{erreurs.photo}}</small>
                 {% endif %}
             </label>
-            <input type="submit" name="creerProduit" value="créer" />
+            <input type="submit" name="creerProduit" value="Ajouter une voiture" />
         </fieldset>
     </div>
 </form>

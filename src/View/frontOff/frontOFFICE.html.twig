@@ -10,10 +10,10 @@
 	<form method="post" action="{{ path('Panier.index')}}">
 		<div class="row">
 			<fieldset>
-				<legend>Rechercher un produit via son type</legend>
-				<label>Type du produit
+				<legend>Rechercher une voiture via son type</legend>
+				<label>Type de la voiture
 					<select name="typeProduit_id">
-						<option value="0">Tous les produits</option>
+						<option value="0">Toutes les voitures</option>
                         {% for typeProduit in typeProduits %}
 							<option value="{{ typeProduit.id }}"
                                     {% if donnees.typeProduit_id is defined and typeProduit.id == donnees.typeProduit_id %}selected{% endif %}>
@@ -32,10 +32,10 @@
 	<div class="row">
         {% if donneesProduit is defined and donneesProduit is not empty %}
 			<table align="center">
-				<caption>Détails du produit</caption>
+				<caption>Détails de la voiure</caption>
 				<thead>
 				<tr>
-					<th>ID du produit</th><th>Nom du produit</th><th>Photo du produit</th><th>Prix du produit</th><th>Produit(s) en stock</th>
+					<th>ID de la voiture</th><th>Nom de la voiture</th><th>Photo de la voiture</th><th>Prix de la voiture</th><th>Nombre en stock</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -71,7 +71,7 @@
 				<caption>Panier</caption>
 				<thead>
 				<tr>
-					<th>id</th><th>quantite</th><th>prix</th><th>date d'ajout au panier</th><th>Id produit</th>
+					<th>ID</th><th>Quantite</th><th>Prix</th><th>Date d'ajout au panier</th><th>ID de la voiture</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -88,7 +88,7 @@
 			<div style="text-align: center;">Prix total : {{ prix.prixTotal }} €</div><br>
 			<div style="text-align: center;"><a href="{{ path('commande.valider') }}">Valider la commande</a></div>
         {% else %}
-			<div style="text-align: center;">Vous n'avez pas de produit dans le panier</div>
+			<div style="text-align: center;">Vous n'avez pas de voiture dans votre panier</div>
         {% endif %}
 	</div>
 

@@ -6,17 +6,17 @@
 
     <div class="row">
         <table>
-            <caption>Détails du produit</caption>
+            <caption>Détails de la voiture</caption>
             <thead>
             <tr>
-                <th>ID produit</th><th>Type de produit</th><th>nom</th><th>prix</th><th>Dipsonibilté</th><th>Stock</th><th>Photo</th>
+                <th>ID de la voiture</th><th>Type de la voiture</th><th>Nom</th><th>Prix</th><th>Dipsonibilté</th><th>Stock</th><th>Photo</th>
             </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>{{produits.id}}</td><td>{{produits.typeProduit_id}}</td><td>{{produits.nom}}</td><td>{{produits.prix}} €</td>
                     </td><td>{{ produits.dispo }}</td><td>{{ produits.stock }}</td><td>
-                        <img style="width:100px;height:70px" src="{{asset('images/')}}{{produits.photo}}" alt="image de {{produits.nom}}" >
+                        <img style="width:225px;height:140px" src="{{asset('images/')}}{{produits.photo}}" alt="image de {{produits.nom}}" >
                     </td>
                 </tr>
             <tbody>

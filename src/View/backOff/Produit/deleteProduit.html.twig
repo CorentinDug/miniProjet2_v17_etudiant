@@ -5,12 +5,12 @@
 	
 	<fieldset>
 		<input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token_delete_produit') }}">
-		<legend>Confirmer la suppression du produit suivant : (avec twig)</legend>
+		<legend>Confirmer la suppression de la voiture suivante : </legend>
 		<input name="id"  type="hidden" value="{{donnees.id}}" />
 		<label>Nom : <h5>{{donnees.nom}}</h5> </label>
 		<input type="hidden" id="_method" name="_method" value="delete" />
 
-		<input type="submit" name="supprimerProduit" value="Supprimer" />
+		<input type="submit" name="supprimerProduit" value="Supprimer la voiture" />
 	</fieldset>	
 </div>
 </form>

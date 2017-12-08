@@ -6,9 +6,9 @@
 		{% endif %}
 
 		<table align="center">
-			<caption>Recapitulatifs des produits</caption>
+			<caption>Recapitulatifs des voitures</caption>
 			<thead>
-			<tr><th>nom</th><th>id</th><th>type</th><th>prix</th><th>photo</th>
+			<tr><th>Nom</th><th>ID</th><th>Type</th><th>Prix</th><th>Photo</th>
 				{% if   app.session.get('droit') is defined and  app.session.get('droit') == 'DROITadmin' %}
 					<th>opération</th>
 				{% endif %}
@@ -24,8 +24,8 @@
 					</td>
 					{% if   app.session.get('roles') is defined and  app.session.get('roles') == 'ROLE_ADMIN' %}
 						<td>
-							<a href="{{ path('produit.editProduit', {id: produit.id}) }}">Modifier</a>
-							<a href="{{ path('produit.deleteProduit', {id: produit.id}) }}">Supprimer</a>
+							<a href="{{ path('produit.editProduit', {id: produit.id}) }}">Modifier la voiture | </a>
+							<a href="{{ path('produit.deleteProduit', {id: produit.id}) }}">Supprimer la voiture | </a>
 							<a href="{{ path('commentaire.showCommentaire', {id: produit.id}) }}">Voir tous les commentaires</a>
 						</td>
 					{% endif %}
