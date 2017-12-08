@@ -64,117 +64,32 @@ $app->register(new FormServiceProvider());
 // Montage des controleurs sur le routeur
 include('routing.php');
 
-//MiddleWare route pour le cote ADMIN
+//MiddleWare routes cote ADMIN
 $app->before(function (\Symfony\Component\HttpFoundation\Request $request) use ($app) {
-    $nomRoute=$request->get("_route");
-    //Bloquer la page de l'administration aux anonymes
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="index.pageAdmin") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
+    $nomRoute = $request->get('_route');
+    $routeAdmin = array("commentaires.validFormDeleteCommentaire","commentaires.delete","commentaire.showCommentaire","produit.validFormEditProduit",
+        "produit.editProduit","produit.validFormDeleteProduit","produit.deleteProduit","produit.validFormAddProduit","produit.addProduit","produit.showProduits","client.validFormDelete",
+        "client.delete","client.updateByAdmin","client.validFormAddClient","client.addClient","client.showAll",
+        "commande.voirCommande","commande.modifierEtat","commande.showAllCommandes","index.pageAdmin");
+
+    if ($app['session']->get('roles') != 'ROLE_ADMIN' && in_array($nomRoute,$routeAdmin)){
+        return $app->redirect($app["url_generator"]->generate('index.erreurDroit'));
     }
-    //Bloquer les routes des commandes
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="commande.showAllCommandes") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="commande.modifierEtat") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="commande.voirCommande") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    //Bloquer la route des clients pour ajouter, modifier et supprimer ceux-ci
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="client.showAll") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') == 'ROLE_CLIENT'  && $nomRoute=="client.addClient") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') == 'ROLE_CLIENT'  && $nomRoute=="client.validFormAddClient") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="client.updateByAdmin") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
+
     if (($app['session']->get('roles') != 'ROLE_ADMIN' && $app['session']->get('roles') != 'ROLE_CLIENT')  && $nomRoute=="client.validFormEditClient") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="client.delete") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="client.validFormDelete") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    //Bloquer l'acces aux autres qu'admin pour les produits
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="produit.showProduits") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="produit.addProduit") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="produit.validFormAddProduit") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="produit.deleteProduit") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="produit.validFormDeleteProduit") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="produit.editProduit") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="produit.validFormEditProduit") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="commentaire.showCommentaire") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="commentaires.delete") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_ADMIN'  && $nomRoute=="commentaires.validFormDeleteCommentaire") {
         return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
     }
 });
 
-//MiddleWare route pour le cote CLIENT
+//MiddleWare routes cote CLIENT
 $app->before(function (\Symfony\Component\HttpFoundation\Request $request) use ($app) {
-    $nomRoute=$request->get("_route");
-    //Bloquer la page de l'administration aux anonymes
-    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="Panier.index") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="Panier.add") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="Panier.delete") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="Panier.details") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="Panier.showCommande") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="produitClient.find") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="commande.index") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="commande.valider") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="client.update") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="commentaire.add") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="commentaires.validFormAddCommentaire") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
-    }
-    if ($app['session']->get('roles') != 'ROLE_CLIENT'  && $nomRoute=="commentaire.showCommentairesClient") {
-        return $app->redirect($app["url_generator"]->generate("index.erreurDroit"));
+    $nomRoute = $request->get('_route');
+    $routeClient = array("commentaire.showCommentairesClient","commentaires.validFormAddCommentaire","commentaire.add","client.update",
+        "commande.valider","commande.index","produitClient.find","Panier.showCommande","Panier.details","Panier.delete","Panier.add",
+        "Panier.index");
+
+    if ($app['session']->get('roles') != 'ROLE_CLIENT' && in_array($nomRoute,$routeClient)){
+        return $app->redirect($app["url_generator"]->generate('index.erreurDroit'));
     }
 });
 
