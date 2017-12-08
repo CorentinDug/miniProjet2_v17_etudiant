@@ -91,6 +91,10 @@ $app->before(function (\Symfony\Component\HttpFoundation\Request $request) use (
     if ($app['session']->get('roles') != 'ROLE_CLIENT' && in_array($nomRoute,$routeClient)){
         return $app->redirect($app["url_generator"]->generate('index.erreurDroit'));
     }
+
+    if (($app['session']->get('logged') != 1 && $nomRoute=='client.index')){
+        return $app->redirect($app["url_generator"]->generate('index.erreurDroit'));
+    }
 });
 
 //MiddleWares TOKEN
