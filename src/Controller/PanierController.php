@@ -85,18 +85,18 @@ class PanierController implements ControllerProviderInterface{
         $produit_id = $this->panierModel->getProuidtIDByID($id);
 
         if ($panierModel['quantite'] == 1){
-            var_dump($panierModel['quantite']);
             $panierModel = $this->panierModel->supprimerProduitDuPanier($id);
         }else{
             $panierModel['quantite'] = $panierModel['quantite'] - 1;
             $panierModel = $this->panierModel->modifierQuantitePanier($panierModel['produit_id'],$panierModel,$user);
         }
         $this->produitModel = new ProduitModel($app);
-        $stock = $this->produitModel->getStockByID($id);
+        $stock = $this->produitModel->getStockByID($produit_id['produit_id']);
         if ($stock['stock'] == null){
             $stock['stock'] = 0;
         }
-        $this->produitModel->updateStock($produit_id['produit_id'],$stock['stock']+1);
+        $stock['stock'] = $stock['stock'] + 1;
+        $this->produitModel->updateStock($produit_id['produit_id'],$stock['stock']);
 
         return $app->redirect($app["url_generator"]->generate("Panier.index"));
     }
