@@ -192,6 +192,16 @@ $app->before(function (\Symfony\Component\HttpFoundation\Request $request) use (
                 return $app ->redirect($app["url_generator"]->generate("index.errorCsrf"));
             }
         }
+    }else if($nomRoute == 'client.validFormAddClientNonInscrit'){
+        if (isset($_POST['_csrf_token'])) {
+            $token = $_POST['_csrf_token'];
+            $csrf_token = new CsrfToken('token_add_client', $token);
+            $csrf_token_ok = $app['csrf.token_manager']->isTokenValid($csrf_token);
+            if(!$csrf_token_ok)
+            {
+                return $app ->redirect($app["url_generator"]->generate("index.errorCsrf"));
+            }
+        }
     }
 });
 
