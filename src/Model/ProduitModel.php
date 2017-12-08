@@ -105,4 +105,26 @@ class ProduitModel {
             ->where('typeProduit_id='.$typeProduit_id);
         return $queryBuilder->execute()->fetchAll();
     }
+
+    public function getStockByID($id)
+    {
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('stock','nom')
+            ->from('produits')
+            ->where('id='.$id);
+
+        return $queryBuilder->execute()->fetch();
+    }
+
+    public function updateStock($id, $quantiteRestante)
+    {
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->update('produits')
+            ->set('stock', '?')
+            ->where('id= '.$id)
+            ->setParameter(0, $quantiteRestante);
+        return $queryBuilder->execute();
+    }
 }

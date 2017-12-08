@@ -136,4 +136,15 @@ class PanierModel{
 
         return $queryBuilder->execute()->fetchAll();
     }
+
+    public function getProuidtIDByID($id)
+    {
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('produit_id')
+            ->from('paniers')
+            ->where('id='.$id);
+
+        return $queryBuilder->execute()->fetch();
+    }
 }

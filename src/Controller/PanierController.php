@@ -63,15 +63,17 @@ class PanierController implements ControllerProviderInterface{
         $panierQuantite = $this->panierQuantite->getQuantiteById($id,$user);
 
         $this->panierModel = new PanierModel($app);
+        $stock = $this->produitModel->getStockByID($id);
 
-        if ($panierQuantite['quantite'] == null){
-            $panierQuantite['quantite'] = 1;
-            $this->panierModel->ajouterAuPanier($user,$produitModel,$panierQuantite);
-        }else{
-            $panierQuantite['quantite'] += 1;
-            $this->panierModel->modifierQuantitePanier($id,$panierQuantite,$user);
-        }
-
+            if ($panierQuantite['quantite'] == null){
+                $panierQuantite['quantite'] = 1;
+                $this->panierModel->ajouterAuPanier($user,$produitModel,$panierQuantite);
+            }else{
+                $panierQuantite['quantite'] += 1;
+                $this->panierModel->modifierQuantitePanier($id,$panierQuantite,$user);
+            }
+            $stock['stock'] -= 1;
+            $this->produitModel->updateStock($id,$stock['stock']);
         return $app->redirect($app["url_generator"]->generate("Panier.index"));
     }
 
@@ -80,14 +82,21 @@ class PanierController implements ControllerProviderInterface{
 
         $this->panierModel = new PanierModel($app);
         $panierModel = $this->panierModel->getProduitDansPanierById($id);
+        $produit_id = $this->panierModel->getProuidtIDByID($id);
 
         if ($panierModel['quantite'] == 1){
             var_dump($panierModel['quantite']);
             $panierModel = $this->panierModel->supprimerProduitDuPanier($id);
         }else{
-            $panierModel['quantite'] -= 1;
+            $panierModel['quantite'] = $panierModel['quantite'] - 1;
             $panierModel = $this->panierModel->modifierQuantitePanier($panierModel['produit_id'],$panierModel,$user);
         }
+        $this->produitModel = new ProduitModel($app);
+        $stock = $this->produitModel->getStockByID($id);
+        if ($stock['stock'] == null){
+            $stock['stock'] = 0;
+        }
+        $this->produitModel->updateStock($produit_id['produit_id'],$stock['stock']+1);
 
         return $app->redirect($app["url_generator"]->generate("Panier.index"));
     }

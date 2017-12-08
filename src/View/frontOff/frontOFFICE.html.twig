@@ -1,10 +1,11 @@
 {% extends "layout.html.twig" %}
-
-
-
 {% block contenu %}
 
 	<h1 align="center" style="color: red"> Projet 2 web : site de vente Espace client </h1>
+
+	{% if donneeStock is defined and donneeStock is not empty %}
+		<h2 align="center" style="color: red">La voiture choisie ({{ donneeStock.nom }}) n'est plus disponible.<br> Veuillez réessayer ultérieurement<br></h2>
+	{% endif %}
 
 	<form method="post" action="{{ path('Panier.index')}}">
 		<div class="row">
@@ -44,7 +45,11 @@
 							<img style="width:100px;height:70px" src="{{asset('images/')}}{{produit.photo}}" alt="image de {{produit.nom}}" >
 						</td><td>{{ produit.prix }} €</td><td>{{ produit.stock }}</td>
 						<td>
-							<a href="{{ path('Panier.add', {id: produit.id}) }}">Ajouter au panier</a>
+							{% if produit.stock > 0 %}
+								<a href="{{ path('Panier.add', {id: produit.id}) }}">Ajouter au panier</a>
+							{% else %}
+								Epuisé
+							{% endif %}
 						</td>
 						<td>
 							<a href="{{ path('Panier.details', {id: produit.id}) }}">Details </a>
