@@ -1,7 +1,7 @@
 {% extends "layout.html.twig" %}
 {% block contenu %}
 
-	<h1 align="center" style="color: red"> Projet 2 web : site de vente Espace client </h1>
+	<h1 align="center"> Espace client site de ventes Projet Web 2 </h1>
 
 	{% if donneeStock is defined and donneeStock is not empty %}
 		<h2 align="center" style="color: red">La voiture choisie ({{ donneeStock.nom }}) n'est plus disponible.<br> Veuillez réessayer ultérieurement<br></h2>
@@ -85,10 +85,10 @@
                 {% endfor %}
 				</tbody>
 			</table>
-			<div style="text-align: center;">Prix total : {{ prix.prixTotal }} €</div><br>
+			<div style="text-align: center;color: white;">Prix total : {{ prix.prixTotal }} €</div><br>
 			<div style="text-align: center;"><a href="{{ path('commande.valider') }}">Valider la commande</a></div>
         {% else %}
-			<div style="text-align: center;">Vous n'avez pas de voiture dans votre panier</div>
+			<div style="text-align: center;color: white">Vous n'avez pas de voiture dans votre panier</div>
         {% endif %}
 		<br><br>
 	</div>

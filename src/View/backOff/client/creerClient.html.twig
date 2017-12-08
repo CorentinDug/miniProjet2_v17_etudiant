@@ -51,10 +51,12 @@
 
                 <img src="{{ image }}" name="image" value="" /><br>
 
-                saisir captcha : <input type="text" name="maPhrase">
-                {% if erreurs.phrase is defined %}
-                    <small class="error">{{erreurs.phrase}}</small>
-                {% endif %}
+                <label>Saisir captcha :
+                    <input type="text" name="maPhrase">
+                    {% if erreurs.phrase is defined %}
+                        <small class="error">{{erreurs.phrase}}</small>
+                    {% endif %}
+                </label>
                 <input type="submit" name="ajouterClient" value="Ajouter un client" />
             </fieldset>
         </div>
