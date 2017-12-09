@@ -20,7 +20,7 @@
 				<tr>
 					<td>{{produit.nom}}</td><td>{{produit.id}}</td><td>{{produit.libelle}}</td><td>{{produit.prix}} €</td>
 					<td>
-						<img style="width:200px;height:70px" src="{{asset('images/')}}{{produit.photo}}" alt="image de {{produit.libelle}}" >
+						<img style="width:100px;height:70px" src="{{asset('images/')}}{{produit.photo}}" alt="image de {{produit.libelle}}" >
 					</td>
 					<td>{{ produit.stock }}</td>
 					{% if   app.session.get('roles') is defined and  app.session.get('roles') == 'ROLE_ADMIN' %}
