@@ -147,4 +147,26 @@ class PanierModel{
 
         return $queryBuilder->execute()->fetch();
     }
+
+    public function getPanierByDate($user)
+    {
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('*')
+            ->from('paniers')
+            ->where('user_id='.$user.' and dateAjoutPanier = curdate() and commande_id is null');
+
+        return $queryBuilder->execute()->fetchAll();
+    }
+
+    public function getPanierByDateDifferente($user)
+    {
+        $queryBuilder = new QueryBuilder($this->db);
+        $queryBuilder
+            ->select('*')
+            ->from('paniers')
+            ->where('user_id='.$user.' and dateAjoutPanier != curdate() and commande_id is null');
+
+        return $queryBuilder->execute()->fetchAll();
+    }
 }

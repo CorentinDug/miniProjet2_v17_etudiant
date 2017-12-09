@@ -26,7 +26,18 @@ class PanierController implements ControllerProviderInterface{
 
         $user = $app['session']->get('user_id');
         $this->panierModel = new PanierModel($app);
-        $panierModel = $this->panierModel->getAllPanier($user);
+        /*$panierModel = $this->panierModel->getAllPanier($user);*/
+        $panierModel = $this->panierModel->getPanierByDate($user);
+        $panierDateDifferente = $this->panierModel->getPanierByDateDifferente($user);
+        if($panierDateDifferente != null){
+            foreach ($panierDateDifferente as $value){
+                $quantite = $this->produitModel->getStockByID($value['produit_id']);
+                $quantiteRestante = $value['quantite']+$quantite['stock'];
+                $this->produitModel->updateStock($value['produit_id'],$quantiteRestante);
+                $this->panierModel->supprimerProduitDuPanier($value['id']);
+            }
+            return $app->redirect($app["url_generator"]->generate("Panier.index"));
+        }
 
         $prixTotal = $this->panierModel->getPrixByPanier($user);
 
