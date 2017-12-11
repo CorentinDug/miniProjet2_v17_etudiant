@@ -3,7 +3,7 @@
 <form method="post" action="{{ path('produit.validFormAddProduit') }}" enctype="multipart/form-data">
     <div class="row">
         <fieldset>
-            <input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token_add_produit') }}">
+            <input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token') }}">
             <legend>Ajouter une voiture</legend>
             <label>Nom :
                 <input name="nom"  type="text"  size="18" value="{{donnees.nom|default('')}}" />

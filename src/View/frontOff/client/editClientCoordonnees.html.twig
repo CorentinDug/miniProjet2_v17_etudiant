@@ -3,7 +3,7 @@
     <form method="post" action="{{ path('client.validFormEditClient') }}">
         <div class="row">
             <fieldset>
-                <input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token_update_client') }}">
+                <input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token') }}">
                 <legend>Modifier vos coordonnées personnelles</legend>
                 <input name="id"  type="hidden" value="{{donnees.id}}" />
                 <label>Nom :

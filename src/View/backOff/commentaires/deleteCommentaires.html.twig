@@ -4,7 +4,7 @@
     <form method="post" action="{{ path('commentaires.validFormDeleteCommentaire') }}">
         <div class="row">
             <fieldset>
-                <input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token_delete_commentaires') }}">
+                <input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token') }}">
                 <input type="hidden" id="_method" name="_method" value="delete" />
                 <input type="hidden"   name="id"   value="{{ id }}">
                 <legend>Supprimer un comentaire</legend>

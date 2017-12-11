@@ -4,7 +4,7 @@
 <div class="row">
 	
 	<fieldset>
-		<input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token_delete_produit') }}">
+		<input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token') }}">
 		<legend>Confirmer la suppression de la voiture suivante : </legend>
 		<input name="id"  type="hidden" value="{{donnees.id}}" />
 		<label>Nom : <h5>{{donnees.nom}}</h5> </label>

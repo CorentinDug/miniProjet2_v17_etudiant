@@ -3,7 +3,7 @@
 	<form method="post" action="{{ path('produit.validFormEditProduit') }}">
 		<div class="row">
 			<fieldset>
-				<input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token_edit_produit') }}">
+				<input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token') }}">
 				<legend>Modifier une voiture </legend>
 				<input name="id"  type="hidden" value="{{donnees.id}}" />
 				<label>Nom :
