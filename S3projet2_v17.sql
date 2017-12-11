@@ -92,11 +92,11 @@ CREATE TABLE users (
 # mot de passe crypté avec security.encoder.bcrypt
 
 INSERT INTO users (id,username,password,motdepasse,email,roles) VALUES
-(1, 'admin', '$2y$13$mJK5hyDNAY9rcDuEBofjJ.h3d7xBwlApfMoknBDO0AvXLr1AaJM02', 'admin', 'admin@gmail.com','ROLE_ADMIN'),
-(2, 'invite', '$2y$13$j5rdj5QL3fd.IZlA5JNbc.kTRaa1YbJK/G7h2mB51ySzaDdgEbo8W', 'invite', 'admin@gmail.com','ROLE_INVITE'),
-(3, 'vendeur', '$2y$13$/gwC0Iv6ssewrr9JeUDDuOcRTWD.uIEjJpH1HUWPAxe.5EwY98OEO','vendeur', 'vendeur@gmail.com','ROLE_VENDEUR'),
-(4, 'client', '$2y$13$bhuMlUWdfc5mAhVumuKUG.etahlJ399DEwuQPhbdXjiCdKIeX2nii', 'client', 'client@gmail.com','ROLE_CLIENT'),
-(5, 'client2', '$2y$13$SYEM3Tk/5G.C85pIAm0cSOd8BFrFTEnLHBSWsW96Q3k9gCdFXRmvm','client2', 'client2@gmail.com','ROLE_CLIENT');
+(1, 'admin', 'd05cc09587a5589671f59966bea4fb12', 'admin', 'admin@gmail.com','ROLE_ADMIN'),
+(2, 'invite', '96260fb4892518eed8ae345e5fe886e7', 'invite', 'admin@gmail.com','ROLE_INVITE'),
+(3, 'vendeur', '97049651da4aa9acf7f2ec0b62af3c52','vendeur', 'vendeur@gmail.com','ROLE_VENDEUR'),
+(4, 'client', '2f9dab7127378d55a4121d855266074c', 'client', 'client@gmail.com','ROLE_CLIENT'),
+(5, 'client2', '2b49abae6e13396373d67063c6473efb','client2', 'client2@gmail.com','ROLE_CLIENT');
 
 
 
