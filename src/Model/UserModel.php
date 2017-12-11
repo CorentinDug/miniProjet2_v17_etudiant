@@ -13,8 +13,9 @@ class UserModel {
 	}
 
 	public function verif_login_mdp_Utilisateur($login,$mdp){
-		$sql = "SELECT id,username,motdepasse,roles FROM users WHERE username = ? AND motdepasse = ?";
-		$res=$this->db->executeQuery($sql,[$login,$mdp]);   //md5($mdp);
+		$sql = "SELECT id,username,password,roles FROM users WHERE username = ? AND password = ?";
+        $grainDeSel = "gsjkstzzeadsfùzrafsdf!sq!fezlkfes";
+        $res=$this->db->executeQuery($sql,[$login,md5($mdp.$grainDeSel)]);   //md5($mdp);
 		if($res->rowCount()==1)
 			return $res->fetch();
 		else

@@ -99,8 +99,7 @@ class clientController implements ControllerProviderInterface
         $builder = new CaptchaBuilder();
         $builder->build();
         $_SESSION['phrase'] = $builder -> getPhrase();
-        $phrase = $_SESSION['phrase'];
-        return $app["twig"]->render('backOff/client/creerClient.html.twig', ['phrase' => $phrase, 'image' => $builder -> inline()]);
+        return $app["twig"]->render('backOff/client/creerClient.html.twig', ['image' => $builder -> inline()]);
     }
 
     public function ajouterUnClientNonInscrit(Application $app){
@@ -149,8 +148,7 @@ class clientController implements ControllerProviderInterface
                 $builder = new CaptchaBuilder();
                 $builder->build();
                 $_SESSION['phrase'] = $builder -> getPhrase();
-                $phrase = $_SESSION['phrase'];
-                return $app["twig"]->render('backOff/client/creerClient.html.twig',['donnees'=>$donnees,'erreurs'=>$erreurs,'image' => $builder->inline(), 'phrase' => $phrase]);
+                return $app["twig"]->render('backOff/client/creerClient.html.twig',['donnees'=>$donnees,'erreurs'=>$erreurs,'image' => $builder->inline()]);
             }
             else
             {
@@ -210,7 +208,12 @@ class clientController implements ControllerProviderInterface
                 $builder->build();
                 $_SESSION['phrase'] = $builder -> getPhrase();
                 $phrase = $_SESSION['phrase'];
-                return $app["twig"]->render('backOff/client/creerClient.html.twig',['donnees'=>$donnees,'erreurs'=>$erreurs,'image' => $builder->inline(), 'phrase' => $phrase]);
+                if($app['session']->get('roles') == 'ROLE_ADMIN') {
+                    return $app["twig"]->render('backOff/client/creerClient.html.twig', ['donnees' => $donnees, 'erreurs' => $erreurs, 'image' => $builder->inline(), 'phrase' => $phrase]);
+                }else{
+                    return $app["twig"]->render('creerClientNonInscrit.html.twig', ['donnees' => $donnees, 'erreurs' => $erreurs, 'image' => $builder->inline(), 'phrase' => $phrase]);
+
+                }
             }
             else
             {
@@ -219,6 +222,7 @@ class clientController implements ControllerProviderInterface
                 $donnees['password'] = $hash;
                 $this->clientModel = new clientModel($app);
                 $this->clientModel->addClient($donnees);
+
                 return $app->redirect($app["url_generator"]->generate('index.index'));
             }
 
