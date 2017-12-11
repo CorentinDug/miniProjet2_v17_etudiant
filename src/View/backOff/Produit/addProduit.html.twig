@@ -1,6 +1,6 @@
 {% extends "layout.html.twig" %}
 {% block contenu %}
-<form method="post" action="{{ path('produit.validFormAddProduit') }}">
+<form method="post" action="{{ path('produit.validFormAddProduit') }}" enctype="multipart/form-data">
     <div class="row">
         <fieldset>
             <input type="hidden"   name="_csrf_token"   value="{{ csrf_token('token_add_produit') }}">
@@ -34,10 +34,13 @@
                 {% endif %}
             </label>
             <label>Photo
-                <input name="photo"  type="text"  size="18" value="{{donnees.photo|default('')}}"/>
-                {% if erreurs.photo is defined %}
-                    <small class="error">{{erreurs.photo}}</small>
+                <label for="photo">Icône du fichier (JPG, PNG ou GIF | max. 15 Ko) :</label><br />
+                <input type="file" name="photo" id="photo" /><br />
+                <input type="hidden" name="maxsize" value="123456778" />
+                {% if erreurs.image is defined %}
+                    <small class="error">{{erreurs.image}}</small>
                 {% endif %}
+
             </label>
             <input type="submit" name="creerProduit" value="Ajouter une voiture" />
         </fieldset>
