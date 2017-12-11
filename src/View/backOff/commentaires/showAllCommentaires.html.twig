@@ -5,13 +5,13 @@
             <table align="center">
                 <caption>Commentaires sur le produit</caption>
                 <thead>
-                <tr><th>ID du commentaire</th><th>Commentaire</th><th>Username du client</th>
+                <tr><th>ID du commentaire</th><th>Username du client</th><th>Commentaire</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for com in commentaires if commentaires is not empty %}
                     <tr>
-                        <td>{{com.id}}</td><td>{{com.commentaire}}</td><td>{{com.username}}</td>
+                        <td>{{com.id}}</td><td>{{com.username}}</td><td>{{com.commentaire}}</td>
                         <td><a href="{{ path('commentaires.delete',{id: com.id}) }}">Supprimer le commentaire</a></td>
                     </tr>
                 {% endfor %}
